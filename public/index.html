@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Civitra — AI-powered Election Process Education Assistant. Demystifying Indian democracy through interactive conversation.">
+  <meta name="theme-color" content="#0a0e1a">
+  <title>Civitra — Clarity in Every Vote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <!-- ── Animated Background ──────────────────────────── -->
+  <div class="bg-gradient" aria-hidden="true">
+    <div class="bg-orb bg-orb--saffron"></div>
+    <div class="bg-orb bg-orb--white"></div>
+    <div class="bg-orb bg-orb--green"></div>
+  </div>
+
+  <!-- ── App Shell ────────────────────────────────────── -->
+  <div id="app" class="app">
+
+    <!-- ── Sidebar Navigation ─────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <div class="sidebar__logo">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+            <circle cx="20" cy="20" r="18" stroke="url(#tricolor)" stroke-width="2.5" fill="none"/>
+            <path d="M14 20.5L18 24.5L26 16.5" stroke="url(#tricolor)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="tricolor" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#FF9933"/>
+                <stop offset="50%" stop-color="#FFFFFF"/>
+                <stop offset="100%" stop-color="#138808"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div>
+            <h1 class="sidebar__title">Civitra</h1>
+            <p class="sidebar__tagline">Clarity in Every Vote</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <button class="nav-item active" data-view="chat" id="nav-chat">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+          <span>Chat</span>
+        </button>
+        <button class="nav-item" data-view="learn" id="nav-learn">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+          </svg>
+          <span>Learn</span>
+        </button>
+        <button class="nav-item" data-view="plan" id="nav-plan">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          <span>My Voting Plan</span>
+        </button>
+        <button class="nav-item" data-view="quiz" id="nav-quiz">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span>Quiz</span>
+        </button>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="sidebar__disclaimer">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <span>Non-partisan. Process-focused. Powered by Gemini AI.</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Mobile Header ──────────────────────────────── -->
+    <header class="mobile-header" id="mobile-header">
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="mobile-brand">
+        <svg viewBox="0 0 28 28" fill="none" class="logo-icon logo-icon--sm"><circle cx="14" cy="14" r="12" stroke="url(#tc2)" stroke-width="2" fill="none"/><path d="M10 14.5L13 17.5L19 11.5" stroke="url(#tc2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="tc2" x1="0" y1="0" x2="28" y2="28"><stop offset="0%" stop-color="#FF9933"/><stop offset="50%" stop-color="#FFF"/><stop offset="100%" stop-color="#138808"/></linearGradient></defs></svg>
+        <span>Civitra</span>
+      </div>
+    </header>
+
+    <!-- ── Main Content ───────────────────────────────── -->
+    <main class="main" id="main-content">
+      <!-- Chat View -->
+      <section class="view view--active" id="view-chat">
+        <div class="chat">
+          <div class="chat__messages" id="chat-messages">
+            <!-- Welcome message -->
+            <div class="chat__welcome">
+              <div class="welcome-icon">🗳️</div>
+              <h2>Namaste! I'm Civitra</h2>
+              <p>Your friendly guide to understanding the Indian election process. Ask me anything about voting, registration, eligibility, or elections!</p>
+              <div class="suggestions" id="suggestions"></div>
+            </div>
+          </div>
+          <div class="chat__input-area">
+            <div class="chat__input-wrapper">
+              <textarea
+                id="chat-input"
+                class="chat__input"
+                placeholder="Ask about elections, voting, registration..."
+                rows="1"
+                aria-label="Type your question"
+              ></textarea>
+              <button class="chat__send-btn" id="chat-send" aria-label="Send message">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
+            </div>
+            <p class="chat__disclaimer">Civitra provides educational info only. Always verify with <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener">ECI</a> for official details.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Learn View -->
+      <section class="view" id="view-learn">
+        <div class="learn">
+          <div class="section-header">
+            <h2>Learn About Elections</h2>
+            <p>Explore key topics about the Indian democratic process</p>
+          </div>
+          <div class="learn__grid" id="learn-grid">
+            <!-- Cards injected by learn.js -->
+          </div>
+          <div class="learn__detail glass-card" id="learn-detail" style="display:none">
+            <button class="learn__back-btn" id="learn-back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back to Topics
+            </button>
+            <div class="learn__detail-content" id="learn-detail-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Voting Plan View -->
+      <section class="view" id="view-plan">
+        <div class="plan">
+          <div class="section-header">
+            <h2>My Voting Plan</h2>
+            <p>Answer a few questions to get your personalized voting checklist</p>
+          </div>
+          <!-- Wizard -->
+          <div class="plan__wizard glass-card" id="plan-wizard">
+            <div class="plan__progress">
+              <div class="plan__progress-bar" id="plan-progress-bar"></div>
+            </div>
+            <div class="plan__step" id="plan-step">
+              <!-- Steps injected by voting-plan.js -->
+            </div>
+            <div class="plan__actions">
+              <button class="btn btn--ghost" id="plan-prev" style="display:none">Back</button>
+              <button class="btn btn--primary" id="plan-next">Next</button>
+            </div>
+          </div>
+          <!-- Result -->
+          <div class="plan__result" id="plan-result" style="display:none">
+            <div class="plan__result-content" id="plan-result-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz View -->
+      <section class="view" id="view-quiz">
+        <div class="quiz">
+          <div class="section-header">
+            <h2>Election Knowledge Quiz</h2>
+            <p>Test your knowledge about the Indian election process</p>
+          </div>
+          <!-- Quiz Start -->
+          <div class="quiz__start glass-card" id="quiz-start">
+            <div class="quiz__start-icon">🧠</div>
+            <h3>Ready to test your election knowledge?</h3>
+            <p>5 questions about the Indian democratic process. Non-partisan. Educational. Fun!</p>
+            <div class="quiz__topics">
+              <label class="quiz__topic-label">Choose a topic:</label>
+              <select id="quiz-topic" class="quiz__topic-select">
+                <option value="General">General Knowledge</option>
+                <option value="Voter Registration">Voter Registration</option>
+                <option value="Voting Process">Voting Process</option>
+                <option value="EVM and VVPAT">EVM & VVPAT</option>
+                <option value="Special Provisions">Special Provisions</option>
+                <option value="Election Commission">Election Commission</option>
+              </select>
+            </div>
+            <button class="btn btn--primary btn--lg" id="quiz-begin">Start Quiz</button>
+          </div>
+          <!-- Quiz Active -->
+          <div class="quiz__active" id="quiz-active" style="display:none">
+            <div class="quiz__header">
+              <span class="quiz__counter" id="quiz-counter">Question 1 of 5</span>
+              <span class="quiz__score" id="quiz-score">Score: 0</span>
+            </div>
+            <div class="quiz__question glass-card" id="quiz-question"></div>
+            <div class="quiz__options" id="quiz-options"></div>
+            <div class="quiz__explanation glass-card" id="quiz-explanation" style="display:none"></div>
+            <button class="btn btn--primary" id="quiz-next-q" style="display:none">Next Question</button>
+          </div>
+          <!-- Quiz Results -->
+          <div class="quiz__results glass-card" id="quiz-results" style="display:none">
+            <div class="quiz__results-content" id="quiz-results-content"></div>
+            <button class="btn btn--primary" id="quiz-retry">Play Again</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ── Overlay for mobile sidebar ───────────────────── -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- ── Toast Container ──────────────────────────────── -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ── Scripts ──────────────────────────────────────── -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
