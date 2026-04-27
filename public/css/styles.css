@@ -354,7 +354,7 @@ body {
 .booth { padding: 0 32px 32px; }
 .booth__container { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
 .booth__map-card { overflow: hidden; }
-.booth__map { min-height: 450px; position: relative; border-radius: var(--radius); overflow: hidden; }
+.booth__map { height: 450px; position: relative; border-radius: var(--radius); overflow: hidden; background: var(--bg-glass); }
 .booth__map-placeholder {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   height: 450px; text-align: center; padding: 32px; gap: 12px;

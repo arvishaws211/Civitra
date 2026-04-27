@@ -77,39 +77,46 @@ function requestLocation() {
 
 function initMap() {
   const placeholder = document.getElementById('booth-map-placeholder');
-  placeholder.style.display = 'none';
+  if (placeholder) placeholder.style.display = 'none';
 
   const mapContainer = document.getElementById('booth-map');
-  // Create a div for the actual google map
+  if (!mapContainer) return;
+
+  // Clear existing map if any
+  mapContainer.innerHTML = '';
+  
   const mapDiv = document.createElement('div');
   mapDiv.id = 'google-map-canvas';
-  mapDiv.style.cssText = 'width:100%;height:100%;border-radius:16px;';
+  mapDiv.style.width = '100%';
+  mapDiv.style.height = '100%';
   mapContainer.appendChild(mapDiv);
 
-  map = new google.maps.Map(mapDiv, {
-    center: userPosition,
-    zoom: 14,
-    styles: getMapStyles(),
-    disableDefaultUI: true,
-    zoomControl: true,
-    mapTypeControl: false,
-    streetViewControl: false,
-    fullscreenControl: true,
-  });
+  // Small timeout to ensure DOM has rendered dimensions
+  setTimeout(() => {
+    map = new google.maps.Map(mapDiv, {
+      center: userPosition,
+      zoom: 14,
+      styles: getMapStyles(),
+      disableDefaultUI: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: true,
+    });
 
-  userMarker = new google.maps.Marker({
-    position: userPosition,
-    map: map,
-    title: 'Your Location',
-    icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 10,
-      fillColor: '#06b6d4',
-      fillOpacity: 1,
-      strokeColor: '#fff',
-      strokeWeight: 3,
-    },
-  });
+    userMarker = new google.maps.Marker({
+      position: userPosition,
+      map: map,
+      title: 'Your Location',
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10,
+        fillColor: '#06b6d4',
+        fillOpacity: 1,
+        strokeColor: '#fff',
+        strokeWeight: 3,
+      },
+    });
+  }, 100);
 }
 
 function searchNearbyBooths() {
