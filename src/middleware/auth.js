@@ -1,0 +1,57 @@
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET || "civitra_default_secret_change_me";
+const JWT_EXPIRY = "7d";
+
+export function generateToken(userId) {
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
+}
+
+export function verifyToken(token) {
+  return jwt.verify(token, JWT_SECRET);
+}
+
+// Middleware: require auth
+export function requireAuth(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader?.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Authentication required" });
+  }
+  try {
+    const decoded = verifyToken(authHeader.split(" ")[1]);
+    req.userId = decoded.userId;
+    next();
+  } catch {
+    return res.status(401).json({ error: "Invalid or expired token" });
+  }
+}
+
+// Middleware: optional auth (sets req.userId if token present)
+export function optionalAuth(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (authHeader?.startsWith("Bearer ")) {
+    try {
+      const decoded = verifyToken(authHeader.split(" ")[1]);
+      req.userId = decoded.userId;
+    } catch { /* ignore */ }
+  }
+  next();
+}
+
+// reCAPTCHA verification
+export async function verifyRecaptcha(token) {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) return true; // Skip if not configured
+
+  try {
+    const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `secret=${secret}&response=${token}`,
+    });
+    const data = await res.json();
+    return data.success && data.score >= 0.5;
+  } catch {
+    return false;
+  }
+}

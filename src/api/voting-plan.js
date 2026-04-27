@@ -2,11 +2,13 @@ import { Router } from "express";
 import { GoogleGenAI } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
+import { stmts } from "../db/database.js";
+import { optionalAuth } from "../middleware/auth.js";
 
 const router = Router();
 
 // ── Generate personalized voting plan ──────────────────────
-router.post("/", async (req, res) => {
+router.post("/", optionalAuth, async (req, res) => {
   const { age, state, isRegistered, hasVoterId, votingPreference, isFirstTime, isNRI, hasPwD } = req.body;
 
   if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === "your_gemini_api_key_here") {
@@ -75,6 +77,13 @@ Focus on Indian election process (ECI).`;
 
     try {
       const plan = JSON.parse(text);
+
+      // Persist for logged-in users
+      if (req.userId) {
+        const answers = JSON.stringify({ age, state, isRegistered, hasVoterId, votingPreference, isFirstTime, isNRI, hasPwD });
+        stmts.savePlan.run(req.userId, JSON.stringify(plan), answers);
+      }
+
       res.json(plan);
     } catch {
       // If JSON parsing fails, return raw text as fallback

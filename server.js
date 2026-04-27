@@ -7,6 +7,8 @@ import votingPlanRouter from "./src/api/voting-plan.js";
 import quizRouter from "./src/api/quiz.js";
 import boothRouter from "./src/api/booth.js";
 import manifestoRouter from "./src/api/manifesto.js";
+import authRouter from "./src/api/auth.js";
+import profileRouter from "./src/api/profile.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,6 +28,8 @@ app.use((req, res, next) => {
 });
 
 // ── API Routes ─────────────────────────────────────────────
+app.use("/api/auth", authRouter);
+app.use("/api/profile", profileRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/voting-plan", votingPlanRouter);
 app.use("/api/quiz", quizRouter);
@@ -35,6 +39,11 @@ app.use("/api/manifesto", manifestoRouter);
 // Health check
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", service: "civitra", timestamp: new Date().toISOString() });
+});
+
+// Expose reCAPTCHA site key to frontend
+app.get("/api/config", (req, res) => {
+  res.json({ recaptchaSiteKey: process.env.RECAPTCHA_SITE_KEY || "" });
 });
 
 // SPA fallback

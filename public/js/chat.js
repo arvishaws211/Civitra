@@ -1,4 +1,5 @@
 import { showToast } from './app.js';
+import { authHeaders } from './auth.js';
 
 let sessionId = '';
 let isStreaming = false;
@@ -86,7 +87,7 @@ async function sendMessage() {
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeaders() },
       body: JSON.stringify({ message: text, sessionId }),
     });
 

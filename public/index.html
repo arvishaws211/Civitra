@@ -71,6 +71,18 @@
           </svg>
           <span>Manifesto</span>
         </button>
+        <button class="nav-item" data-view="profile" id="nav-profile" style="display:none">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span id="sidebar-user-name">Profile</span>
+        </button>
+        <button class="nav-item" id="logout-btn" style="display:none; color: var(--error)">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>Sign Out</span>
+        </button>
       </nav>
 
       <div class="sidebar__footer">
@@ -96,8 +108,98 @@
 
     <!-- ── Main Content ───────────────────────────────── -->
     <main class="main" id="main-content">
-      <!-- Chat View -->
-      <section class="view view--active" id="view-chat">
+      <!-- Auth View -->
+      <section class="view view--active" id="view-auth">
+        <div class="auth">
+          <div class="auth__container glass-card">
+            <div class="auth__header">
+              <img src="/assets/logo.png" alt="Civitra" class="auth__logo">
+              <h2>Welcome to Civitra</h2>
+              <p>Sign in to persist your chat history and voting plans</p>
+            </div>
+
+            <!-- Login Form -->
+            <div id="auth-login" class="auth__form-container">
+              <form id="login-form" class="auth__form">
+                <div class="form-group">
+                  <label for="login-email">Email Address</label>
+                  <input type="email" id="login-email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                  <label for="login-password">Password</label>
+                  <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn--primary btn--full">Sign In</button>
+              </form>
+              <div class="auth__links">
+                <a href="#" data-auth-view="forgot">Forgot Password?</a>
+                <span>Don't have an account? <a href="#" data-auth-view="register">Create one</a></span>
+              </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="auth-register" class="auth__form-container" style="display:none">
+              <form id="register-form" class="auth__form">
+                <div class="form-group">
+                  <label for="register-name">Full Name</label>
+                  <input type="text" id="register-name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                  <label for="register-email">Email Address</label>
+                  <input type="email" id="register-email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                  <label for="register-password">Password</label>
+                  <input type="password" id="register-password" required placeholder="••••••••" minlength="6">
+                </div>
+                <div class="form-group">
+                  <label for="register-confirm">Confirm Password</label>
+                  <input type="password" id="register-confirm" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn--primary btn--full">Create Account</button>
+              </form>
+              <div class="auth__links">
+                <span>Already have an account? <a href="#" data-auth-view="login">Sign In</a></span>
+              </div>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <div id="auth-forgot" class="auth__form-container" style="display:none">
+              <form id="forgot-form" class="auth__form">
+                <p class="auth__subtext">Enter your email to receive a password reset link.</p>
+                <div class="form-group">
+                  <label for="forgot-email">Email Address</label>
+                  <input type="email" id="forgot-email" required placeholder="name@example.com">
+                </div>
+                <button type="submit" class="btn btn--primary btn--full">Send Reset Link</button>
+              </form>
+              <div class="auth__links">
+                <a href="#" data-auth-view="login">Back to Sign In</a>
+              </div>
+            </div>
+
+            <!-- Reset Password Form -->
+            <div id="auth-reset" class="auth__form-container" style="display:none">
+              <form id="reset-form" class="auth__form">
+                <input type="hidden" id="reset-token">
+                <div class="form-group">
+                  <label for="reset-password">New Password</label>
+                  <input type="password" id="reset-password" required placeholder="••••••••" minlength="6">
+                </div>
+                <div class="form-group">
+                  <label for="reset-confirm">Confirm New Password</label>
+                  <input type="password" id="reset-confirm" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn--primary btn--full">Reset Password</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="app-authenticated" style="display:none">
+        <!-- Chat View -->
+        <section class="view" id="view-chat">
         <div class="chat">
           <div class="chat__messages" id="chat-messages">
             <!-- Welcome message -->
@@ -292,6 +394,89 @@
           </div>
         </div>
       </section>
+
+      <!-- Profile View -->
+      <section class="view" id="view-profile">
+        <div class="profile">
+          <div class="section-header">
+            <h2>Your Profile</h2>
+            <p>Manage your account and viewing history</p>
+          </div>
+          
+          <div class="profile__container">
+            <!-- Profile Info -->
+            <div class="profile__main">
+              <div class="glass-card profile__card">
+                <div class="profile__header">
+                  <div class="profile__avatar">👤</div>
+                  <div>
+                    <h3 id="profile-user-name">User Name</h3>
+                    <p id="profile-user-email">email@example.com</p>
+                    <span id="profile-joined" class="profile__joined">Member since ...</span>
+                  </div>
+                </div>
+                
+                <form id="profile-form" class="profile__form">
+                  <div class="profile__form-grid">
+                    <div class="form-group">
+                      <label for="profile-name">Full Name</label>
+                      <input type="text" id="profile-name">
+                    </div>
+                    <div class="form-group">
+                      <label for="profile-email">Email (Read-only)</label>
+                      <input type="email" id="profile-email" readonly disabled>
+                    </div>
+                    <div class="form-group">
+                      <label for="profile-epic">Election Card Number (EPIC)</label>
+                      <input type="text" id="profile-epic" placeholder="ABC1234567">
+                    </div>
+                    <div class="form-group">
+                      <label for="profile-constituency">Your Constituency</label>
+                      <input type="text" id="profile-constituency">
+                    </div>
+                    <div class="form-group">
+                      <label for="profile-state">State</label>
+                      <input type="text" id="profile-state">
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn--primary">Save Changes</button>
+                </form>
+              </div>
+
+              <div class="glass-card profile__card">
+                <h3>🗳️ Election Card Verification</h3>
+                <p class="profile__subtext">Upload your election card to fetch relative data (Demo purposes).</p>
+                <form id="election-card-form" class="profile__upload-form">
+                  <div class="profile__upload-area">
+                    <input type="file" id="election-card-file" accept=".jpg,.jpeg,.png,.webp,.pdf">
+                    <div id="card-preview" class="profile__preview">
+                      <div class="profile__preview-placeholder">No file selected</div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn--ghost">Upload</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- History Sidebar -->
+            <div class="profile__side">
+              <div class="glass-card profile__card">
+                <h3>📜 Chat Sessions</h3>
+                <div id="profile-chat-sessions" class="profile__history-list">
+                  <!-- Injected by profile.js -->
+                </div>
+              </div>
+              <div class="glass-card profile__card">
+                <h3>📋 Saved Voting Plans</h3>
+                <div id="profile-voting-plans" class="profile__history-list">
+                  <!-- Injected by profile.js -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
     </main>
   </div>
 

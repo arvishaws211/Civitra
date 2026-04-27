@@ -2,15 +2,16 @@ import { Router } from "express";
 import { GoogleGenAI } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
+import { stmts } from "../db/database.js";
+import { optionalAuth } from "../middleware/auth.js";
 
 const router = Router();
 
-// ── In-memory conversation store ───────────────────────────
+// ── In-memory conversation store (fallback for guests) ─────
 const sessions = new Map();
-const MAX_HISTORY = 20; // Keep last 20 exchanges per session
-const SESSION_TTL = 30 * 60 * 1000; // 30 min TTL
+const MAX_HISTORY = 20;
+const SESSION_TTL = 30 * 60 * 1000;
 
-// Cleanup stale sessions every 10 minutes
 setInterval(() => {
   const now = Date.now();
   for (const [id, session] of sessions) {
@@ -19,7 +20,7 @@ setInterval(() => {
 }, 10 * 60 * 1000);
 
 // ── Chat endpoint (streaming via SSE) ──────────────────────
-router.post("/", async (req, res) => {
+router.post("/", optionalAuth, async (req, res) => {
   const { message, sessionId } = req.body;
 
   if (!message?.trim()) {
@@ -41,20 +42,25 @@ router.post("/", async (req, res) => {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-    // Get or create session history
-    if (!sessions.has(sessionId)) {
-      sessions.set(sessionId, { history: [], lastActive: Date.now() });
+    // Build history: from DB if logged in, otherwise from memory
+    let history = [];
+    if (req.userId) {
+      const dbHistory = stmts.getHistory.all(req.userId, sessionId);
+      history = dbHistory.map(h => ({ role: h.role, parts: [{ text: h.message }] }));
+    } else {
+      if (!sessions.has(sessionId)) {
+        sessions.set(sessionId, { history: [], lastActive: Date.now() });
+      }
+      const session = sessions.get(sessionId);
+      session.lastActive = Date.now();
+      history = session.history;
     }
-    const session = sessions.get(sessionId);
-    session.lastActive = Date.now();
 
-    // Build conversation contents
     const contents = [
-      ...session.history,
+      ...history,
       { role: "user", parts: [{ text: message }] },
     ];
 
-    // Generate streaming response
     const response = await ai.models.generateContentStream({
       model: "gemini-2.5-flash",
       config: {
@@ -76,15 +82,22 @@ router.post("/", async (req, res) => {
       }
     }
 
-    // Update session history
-    session.history.push(
-      { role: "user", parts: [{ text: message }] },
-      { role: "model", parts: [{ text: fullResponse }] }
-    );
-
-    // Trim history if too long
-    if (session.history.length > MAX_HISTORY * 2) {
-      session.history = session.history.slice(-MAX_HISTORY * 2);
+    // Persist to DB if logged in
+    if (req.userId) {
+      stmts.saveMessage.run(req.userId, sessionId, "user", message);
+      stmts.saveMessage.run(req.userId, sessionId, "model", fullResponse);
+    } else {
+      // Fallback: in-memory
+      const session = sessions.get(sessionId);
+      if (session) {
+        session.history.push(
+          { role: "user", parts: [{ text: message }] },
+          { role: "model", parts: [{ text: fullResponse }] }
+        );
+        if (session.history.length > MAX_HISTORY * 2) {
+          session.history = session.history.slice(-MAX_HISTORY * 2);
+        }
+      }
     }
 
     res.write(`data: ${JSON.stringify({ text: "", done: true })}\n\n`);

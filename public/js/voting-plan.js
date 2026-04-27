@@ -1,4 +1,5 @@
 import { showToast } from './app.js';
+import { authHeaders } from './auth.js';
 
 const STATES = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi','Jammu & Kashmir','Ladakh','Puducherry','Chandigarh','Andaman & Nicobar','Dadra Nagar Haveli & Daman Diu','Lakshadweep'];
 
@@ -113,7 +114,7 @@ async function generatePlan() {
   try {
     const res = await fetch('/api/voting-plan', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeaders() },
       body: JSON.stringify(answers),
     });
     if (!res.ok) throw new Error('Failed');
