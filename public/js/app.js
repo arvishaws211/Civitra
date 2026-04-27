@@ -2,6 +2,8 @@ import { initChat } from './chat.js';
 import { initLearn } from './learn.js';
 import { initVotingPlan } from './voting-plan.js';
 import { initQuiz } from './quiz.js';
+import { initBooth } from './booth.js';
+import { initManifesto } from './manifesto.js';
 
 // ── Session ────────────────────────────────────────────────
 function getSessionId() {
@@ -61,4 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initLearn();
   initVotingPlan(sessionId);
   initQuiz();
+  initBooth();
+  initManifesto();
 });

@@ -8,7 +8,7 @@ const STEPS = [
   { key: 'isRegistered', title: 'Are you registered as a voter?', desc: 'Do you have your name on the electoral roll?', type: 'choice', options: [{ label: 'Yes, I am registered', value: true }, { label: 'No / Not sure', value: false }] },
   { key: 'hasVoterId', title: 'Do you have a Voter ID (EPIC)?', desc: 'The Elector\'s Photo Identity Card issued by ECI.', type: 'choice', options: [{ label: 'Yes, I have it', value: true }, { label: 'No, I don\'t have one', value: false }] },
   { key: 'isFirstTime', title: 'Is this your first time voting?', desc: 'We\'ll add extra guidance if needed.', type: 'choice', options: [{ label: 'Yes, first time! 🎉', value: true }, { label: 'No, I\'ve voted before', value: false }] },
-  { key: 'extras', title: 'Any of these apply to you?', desc: 'Select all that apply for personalized guidance.', type: 'multi', options: [{ label: 'I am an NRI (Non-Resident Indian)', key: 'isNRI' }, { label: 'I am a person with disability', key: 'hasPwD' }, { label: 'I am a senior citizen (80+)', key: 'isSenior' }] },
+  { key: 'extras', title: 'Any of these apply to you?', desc: 'Select all that apply for personalized guidance.', type: 'multi', options: [{ label: 'I am an NRI (Non-Resident Indian)', key: 'isNRI' }, { label: 'I am a person with disability', key: 'hasPwD' }, { label: 'I am a senior citizen (80+)', key: 'isSenior' }, { label: 'None of the above', key: 'isNone' }] },
 ];
 
 let currentStep = 0;
@@ -38,22 +38,40 @@ function renderStep() {
   } else if (step.type === 'select') {
     html += `<select class="plan__input plan__select" id="step-input"><option value="">-- Select --</option>${step.options.map(o => `<option value="${o}" ${answers[step.key] === o ? 'selected' : ''}>${o}</option>`).join('')}</select>`;
   } else if (step.type === 'choice') {
-    html += `<div class="plan__options">${step.options.map((o, i) => `<label class="plan__option ${answers[step.key] === o.value ? 'selected' : ''}" data-value="${o.value}"><input type="radio" name="step" value="${o.value}"><div class="plan__option-radio"></div>${o.label}</label>`).join('')}</div>`;
+    html += `<div class="plan__options">${step.options.map(o => `<div class="plan__option ${answers[step.key] === o.value ? 'selected' : ''}" data-value="${o.value}"><div class="plan__option-radio"></div>${o.label}</div>`).join('')}</div>`;
   } else if (step.type === 'multi') {
-    html += `<div class="plan__options">${step.options.map(o => `<label class="plan__option ${answers[o.key] ? 'selected' : ''}" data-key="${o.key}"><input type="checkbox" ${answers[o.key] ? 'checked' : ''}><div class="plan__option-radio"></div>${o.label}</label>`).join('')}</div>`;
+    html += `<div class="plan__options">${step.options.map(o => `<div class="plan__option ${answers[o.key] ? 'selected' : ''}" data-key="${o.key}"><div class="plan__option-check"></div>${o.label}</div>`).join('')}</div>`;
   }
 
   container.innerHTML = html;
 
   // Bind choice/multi events
   container.querySelectorAll('.plan__option').forEach(opt => {
-    opt.addEventListener('click', () => {
+    opt.addEventListener('click', (e) => {
+      e.preventDefault();
       if (step.type === 'choice') {
         container.querySelectorAll('.plan__option').forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
         const val = opt.dataset.value;
         answers[step.key] = val === 'true' ? true : val === 'false' ? false : val;
       } else if (step.type === 'multi') {
+        const isNone = opt.dataset.key === 'isNone';
+        if (isNone) {
+          // If "None" is selected, unselect everything else
+          container.querySelectorAll('.plan__option').forEach(o => {
+            if (o.dataset.key !== 'isNone') {
+              o.classList.remove('selected');
+              answers[o.dataset.key] = false;
+            }
+          });
+        } else {
+          // If anything else is selected, unselect "None"
+          const noneOpt = container.querySelector('[data-key="isNone"]');
+          if (noneOpt) {
+            noneOpt.classList.remove('selected');
+            answers['isNone'] = false;
+          }
+        }
         opt.classList.toggle('selected');
         answers[opt.dataset.key] = opt.classList.contains('selected');
       }
@@ -110,9 +128,19 @@ async function generatePlan() {
 function renderPlan(plan) {
   const content = document.getElementById('plan-result-content');
 
+  // If we got rawContent, try to parse it as JSON one last time (AI sometimes returns valid JSON string inside rawContent)
   if (plan.rawContent) {
-    content.innerHTML = `<div class="plan__result-card glass-card"><h3>📋 ${plan.title}</h3>${typeof marked !== 'undefined' ? marked.parse(plan.rawContent) : plan.rawContent}</div>` + resetBtn();
-    return;
+    try {
+      const cleanedText = plan.rawContent.replace(/```json\s*/gi, "").replace(/```\s*/g, "").trim();
+      const parsed = JSON.parse(cleanedText);
+      // If parsing succeeds, merge with original plan object
+      Object.assign(plan, parsed);
+      delete plan.rawContent;
+    } catch (e) {
+      // If it's truly not JSON, just show it as markdown
+      content.innerHTML = `<div class="plan__result-card glass-card"><h3>📋 ${plan.title}</h3>${typeof marked !== 'undefined' ? marked.parse(plan.rawContent) : plan.rawContent}</div>` + resetBtn();
+      return;
+    }
   }
 
   let html = `<div class="plan__result-card glass-card"><h3>📋 ${plan.title}</h3><p style="color:var(--text-secondary);margin-bottom:16px">${plan.summary || ''}</p>`;

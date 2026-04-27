@@ -5,6 +5,8 @@ import { dirname, join } from "path";
 import chatRouter from "./src/api/chat.js";
 import votingPlanRouter from "./src/api/voting-plan.js";
 import quizRouter from "./src/api/quiz.js";
+import boothRouter from "./src/api/booth.js";
+import manifestoRouter from "./src/api/manifesto.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,6 +29,8 @@ app.use((req, res, next) => {
 app.use("/api/chat", chatRouter);
 app.use("/api/voting-plan", votingPlanRouter);
 app.use("/api/quiz", quizRouter);
+app.use("/api/booth", boothRouter);
+app.use("/api/manifesto", manifestoRouter);
 
 // Health check
 app.get("/api/health", (req, res) => {

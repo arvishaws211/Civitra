@@ -28,37 +28,35 @@ router.post("/", async (req, res) => {
 - **Person with Disability**: ${hasPwD ? "Yes" : "No"}
 `;
 
-    const planPrompt = `Based on the following user profile, generate a **personalized voting plan** as a structured JSON response. 
+    const planPrompt = `Generate a **personalized voting plan** based on this profile:
 
 ${userProfile}
 
-Return a JSON object with this exact structure (no markdown code fences, just raw JSON):
+### CRITICAL INSTRUCTIONS:
+1. Return ONLY a valid JSON object. 
+2. Do NOT include markdown code blocks (no \`\`\`json).
+3. Do NOT include any text before or after the JSON.
+4. Ensure all keys are quoted and the JSON is perfectly valid.
+
+### REQUIRED JSON STRUCTURE:
 {
   "title": "Your Personalized Voting Plan",
-  "summary": "A brief 1-2 sentence summary of their situation",
+  "summary": "Brief situation summary",
   "steps": [
     {
       "step": 1,
-      "title": "Step title",
-      "description": "Detailed description of what to do",
-      "deadline": "Relevant deadline or timeframe if applicable, otherwise null",
-      "documents": ["List of documents needed for this step, if any"],
-      "link": "Relevant official link if applicable, otherwise null",
-      "completed": false
+      "title": "Action title",
+      "description": "Details",
+      "deadline": "Timeframe/Date or null",
+      "documents": ["Doc list"],
+      "link": "Official URL or null"
     }
   ],
-  "importantDates": [
-    { "event": "Event name", "description": "Brief description" }
-  ],
-  "tips": ["Helpful tips specific to this voter's situation"],
-  "emergencyContacts": {
-    "helpline": "1950",
-    "website": "https://voters.eci.gov.in/",
-    "app": "Voter Helpline App"
-  }
+  "importantDates": [{ "event": "...", "description": "..." }],
+  "tips": ["Tip 1", "Tip 2"]
 }
 
-Make the plan specific to their situation. If they're a first-time voter, include extra guidance. If NRI, include Form 6A steps. If PwD, include accessibility information. Include 4-8 actionable steps.`;
+Focus on Indian election process (ECI).`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
