@@ -1,4 +1,5 @@
 import { lookupElectionFaq } from "./faq-search.js";
+import { lookupSemanticFaq } from "./embedding-faq.js";
 import { translateText } from "./translation.js";
 import { getElectionTimeline } from "./election-timeline.js";
 import { buildCalendarDeepLink } from "./calendar-links.js";
@@ -10,6 +11,10 @@ import { analyzeQueryEntities } from "./natural-language.js";
  */
 export async function executeToolCall(name, args) {
   switch (name) {
+    case "lookup_semantic_faq": {
+      const query = String(args.query ?? "");
+      return lookupSemanticFaq(query, 4);
+    }
     case "lookup_election_faq": {
       const query = String(args.query ?? "");
       return lookupElectionFaq(query, 4);
@@ -66,9 +71,21 @@ export async function executeToolCall(name, args) {
 
 export const civitraToolDeclarations = [
   {
+    name: "lookup_semantic_faq",
+    description:
+      "Semantic vector search over the curated 55+ FAQ corpus using Vertex-style embeddings with cosine similarity. Falls back to keyword search when embeddings are unavailable.",
+    parametersJsonSchema: {
+      type: "object",
+      properties: {
+        query: { type: "string", description: "User question in natural language" },
+      },
+      required: ["query"],
+    },
+  },
+  {
     name: "lookup_election_faq",
     description:
-      "Search the curated Indian election education FAQ for grounded answers (NOTA, forms, EVM, eligibility, etc.).",
+      "Keyword-based FAQ search (fallback). Use lookup_semantic_faq first for better results.",
     parametersJsonSchema: {
       type: "object",
       properties: {

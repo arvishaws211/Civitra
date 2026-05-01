@@ -9,6 +9,7 @@ import manifestoRouter from "./api/manifesto.js";
 import authRouter from "./api/auth.js";
 import profileRouter from "./api/profile.js";
 import analyticsRouter from "./api/analytics.js";
+import translateRouter from "./api/translate.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -52,6 +53,7 @@ export function createApp(opts = {}) {
   app.use("/api/booth", boothRouter);
   app.use("/api/manifesto", manifestoRouter);
   app.use("/api/analytics", analyticsRouter);
+  app.use("/api/translate", translateRouter);
 
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", service: "civitra", timestamp: new Date().toISOString() });

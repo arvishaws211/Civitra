@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import log from "../lib/logger.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "civitra_default_secret_change_me";
 const JWT_EXPIRY = "7d";
@@ -54,10 +55,10 @@ export async function verifyRecaptcha(token) {
       body: `secret=${secret}&response=${token}`,
     });
     const data = await res.json();
-    console.log("reCAPTCHA response:", data);
+    log.debug("recaptcha_response", { success: data.success, score: data.score });
     return data.success && data.score >= 0.5;
   } catch (err) {
-    console.error("reCAPTCHA fetch error:", err);
+    log.error("recaptcha_error", { error: err?.message || String(err) });
     return false;
   }
 }

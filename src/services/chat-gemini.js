@@ -2,13 +2,35 @@ import {
   GoogleGenAI,
   FunctionCallingConfigMode,
   createPartFromFunctionResponse,
+  HarmCategory,
+  HarmBlockThreshold,
 } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
 import { civitraToolDeclarations, executeToolCall } from "./chat-tool-handlers.js";
+import log from "../lib/logger.js";
 
 const MODEL = "gemini-2.5-flash";
 const MAX_TOOL_ROUNDS = 6;
+
+const SAFETY_SETTINGS = [
+  {
+    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+];
 
 function buildSystemText() {
   return `${SYSTEM_PROMPT}
@@ -52,8 +74,19 @@ export async function runChatWithToolsAndStream(ai, contents, res) {
         maxOutputTokens: 2048,
         tools,
         toolConfig,
+        safetySettings: SAFETY_SETTINGS,
       },
     });
+
+    const usage = resp.usageMetadata;
+    if (usage) {
+      log.info("token_usage", {
+        round: rounds,
+        prompt: usage.promptTokenCount,
+        completion: usage.candidatesTokenCount,
+        total: usage.totalTokenCount,
+      });
+    }
 
     const calls = resp.functionCalls;
     if (!calls?.length) {
@@ -89,6 +122,7 @@ export async function runChatWithToolsAndStream(ai, contents, res) {
       temperature: 0.65,
       topP: 0.9,
       maxOutputTokens: 2048,
+      safetySettings: SAFETY_SETTINGS,
     },
   });
 

@@ -7,6 +7,7 @@ import { initManifesto } from "./manifesto.js";
 import { initAuth, isLoggedIn, getUser } from "./auth.js";
 import { initProfile } from "./profile.js";
 import { initJourney } from "./journey.js";
+import { initI18n } from "./i18n.js";
 
 // ── Session ────────────────────────────────────────────────
 function getSessionId() {
@@ -92,6 +93,7 @@ function updateAuthUI(loggedIn) {
     initManifesto();
     initProfile();
     initJourney();
+    initI18n();
     window.__switchView("chat");
   } else {
     authView.style.display = "flex";

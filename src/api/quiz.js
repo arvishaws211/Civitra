@@ -2,6 +2,7 @@ import { Router } from "express";
 import { GoogleGenAI } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
+import log from "../lib/logger.js";
 
 const router = Router();
 
@@ -64,7 +65,7 @@ Rules:
       res.status(500).json({ error: "Failed to parse quiz. Please try again." });
     }
   } catch (error) {
-    console.error("Quiz error:", error.message);
+    log.error("quiz_error", { error: error.message });
     res.status(500).json({ error: "Failed to generate quiz. Please try again." });
   }
 });

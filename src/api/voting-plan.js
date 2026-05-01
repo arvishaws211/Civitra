@@ -3,6 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
 import { firestoreService } from "../db/firestore-service.js";
+import log from "../lib/logger.js";
 import { optionalAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -112,7 +113,7 @@ Focus on Indian election process (ECI).`;
       });
     }
   } catch (error) {
-    console.error("Voting plan error:", error.message);
+    log.error("voting_plan_error", { error: error.message });
     res.status(500).json({ error: "Failed to generate voting plan. Please try again." });
   }
 });

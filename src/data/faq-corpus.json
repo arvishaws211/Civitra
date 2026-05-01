@@ -118,5 +118,215 @@
     "q": "Can I verify VVPAT with my vote?",
     "a": "VVPAT displays a paper slip for verification; ECI defines verification protocols during counting and audits—follow on-booth instructions from officials.",
     "tags": ["vvpat", "verify", "slip"]
+  },
+  {
+    "id": "lok-sabha",
+    "q": "What is Lok Sabha?",
+    "a": "Lok Sabha is the lower house of India's Parliament with 543 elected seats. Members are directly elected by citizens for a five-year term through general elections conducted by ECI.",
+    "tags": ["lok sabha", "parliament", "lower house", "general election"]
+  },
+  {
+    "id": "rajya-sabha",
+    "q": "What is Rajya Sabha?",
+    "a": "Rajya Sabha is the upper house of Parliament with up to 245 members. Members are indirectly elected by state legislators for six-year terms, with one-third retiring every two years.",
+    "tags": ["rajya sabha", "parliament", "upper house", "indirect election"]
+  },
+  {
+    "id": "state-assembly",
+    "q": "What are State Legislative Assemblies?",
+    "a": "State Legislative Assemblies (Vidhan Sabha) are the directly elected legislative bodies at the state level. Members serve five-year terms and elections are conducted by ECI.",
+    "tags": ["vidhan sabha", "state assembly", "state election", "legislature"]
+  },
+  {
+    "id": "panchayat",
+    "q": "What are Panchayat elections?",
+    "a": "Panchayat elections choose representatives for the three-tier local governance system (village, block, and district levels). These are conducted by State Election Commissions, not ECI.",
+    "tags": ["panchayat", "local body", "rural", "state election commission"]
+  },
+  {
+    "id": "municipal",
+    "q": "What are Municipal elections?",
+    "a": "Municipal elections choose representatives for urban local bodies such as municipal corporations, municipalities, and nagar panchayats. They are conducted by State Election Commissions.",
+    "tags": ["municipal", "corporation", "urban", "local body", "nagar panchayat"]
+  },
+  {
+    "id": "by-election",
+    "q": "What is a by-election?",
+    "a": "A by-election is held when a seat in Lok Sabha or a state assembly becomes vacant mid-term due to death, resignation, or disqualification of the sitting member. ECI announces the schedule.",
+    "tags": ["by-election", "vacancy", "mid-term", "casual vacancy"]
+  },
+  {
+    "id": "eci-composition",
+    "q": "How is the Election Commission composed?",
+    "a": "The Election Commission of India consists of the Chief Election Commissioner (CEC) and two Election Commissioners, appointed by the President. All three have equal decision-making power.",
+    "tags": ["eci", "composition", "cec", "election commissioner", "appointment"]
+  },
+  {
+    "id": "qualifying-date",
+    "q": "What is the qualifying date for voter registration?",
+    "a": "ECI has four qualifying dates per year: January 1, April 1, July 1, and October 1. You must be 18 years old on or before the qualifying date to be eligible for enrollment in that revision cycle.",
+    "tags": ["qualifying date", "registration", "age", "enrollment", "revision"]
+  },
+  {
+    "id": "form6a",
+    "q": "What is Form 6A?",
+    "a": "Form 6A is used by overseas Indian (NRI) citizens to register as voters. Eligible NRIs must hold a valid Indian passport and can register for the constituency in their passport address.",
+    "tags": ["form 6a", "nri", "overseas", "registration", "passport"]
+  },
+  {
+    "id": "form6b",
+    "q": "What is Form 6B?",
+    "a": "Form 6B is used to link your Aadhaar number with your voter ID (EPIC). This helps ECI maintain a clean electoral roll by eliminating duplicate entries.",
+    "tags": ["form 6b", "aadhaar", "linking", "voter id", "deduplication"]
+  },
+  {
+    "id": "form8a",
+    "q": "What is Form 8A?",
+    "a": "Form 8A is used for transposition of an entry within the same constituency when a voter shifts residence but stays in the same assembly segment. Submit it to your ERO or online via the voters portal.",
+    "tags": ["form 8a", "transposition", "shifting", "same constituency"]
+  },
+  {
+    "id": "svrs",
+    "q": "What is SVEEP?",
+    "a": "SVEEP (Systematic Voters' Education and Electoral Participation) is ECI's flagship program to boost voter awareness, registration, and turnout through targeted outreach campaigns.",
+    "tags": ["sveep", "voter education", "awareness", "participation", "outreach"]
+  },
+  {
+    "id": "repoll",
+    "q": "When does a re-poll happen?",
+    "a": "ECI may order a re-poll at specific booths if booth capture, EVM malfunction, or natural calamity disrupts the voting process. The decision rests solely with ECI based on field reports.",
+    "tags": ["re-poll", "booth capture", "evm malfunction", "eci order"]
+  },
+  {
+    "id": "mcc-complaint",
+    "q": "How do I file an MCC violation complaint?",
+    "a": "Use the C-Vigil app to report Model Code of Conduct violations with photo or video evidence. You can also file a written complaint with the Returning Officer (RO) or District Election Officer (DEO).",
+    "tags": ["mcc", "complaint", "c-vigil", "returning officer", "violation"]
+  },
+  {
+    "id": "braille",
+    "q": "Are Braille ballots available?",
+    "a": "ECI provides Braille-enabled EVMs with Braille labels on ballot units and dummy ballot papers for visually impaired voters. Presiding officers assist as needed at the booth.",
+    "tags": ["braille", "visually impaired", "accessibility", "evm", "pwd"]
+  },
+  {
+    "id": "transgender",
+    "q": "How do transgender voters register?",
+    "a": "Transgender citizens can select the third gender option on Form 6 during voter registration. ECI follows inclusive enrollment practices to ensure equal electoral participation.",
+    "tags": ["transgender", "third gender", "registration", "inclusive", "form 6"]
+  },
+  {
+    "id": "home-voting",
+    "q": "What is home voting for elderly and PwD?",
+    "a": "Voters aged 80 and above and persons with disabilities can apply for postal ballot facility through their BLO to vote from home. This must be requested before the deadline set by ECI.",
+    "tags": ["home voting", "postal ballot", "elderly", "pwd", "blo"]
+  },
+  {
+    "id": "poll-day-checklist",
+    "q": "What should I carry on polling day?",
+    "a": "Carry a valid photo ID (EPIC or one of 12 ECI-approved alternatives), know your polling booth number, and do not bring mobile phones or cameras inside the voting compartment.",
+    "tags": ["polling day", "checklist", "photo id", "booth", "preparation"]
+  },
+  {
+    "id": "cvigil",
+    "q": "What is the C-Vigil app?",
+    "a": "C-Vigil is ECI's citizen vigilance mobile app that lets anyone report Model Code of Conduct violations with geotagged photo or video evidence. Reports are routed to the nearest flying squad for action.",
+    "tags": ["c-vigil", "app", "mcc", "vigilance", "citizen reporting"]
+  },
+  {
+    "id": "evm-sealing",
+    "q": "How are EVMs sealed?",
+    "a": "EVMs are sealed with multiple tamper-evident seals, and serial numbers are recorded in the presence of candidate agents. The sealed EVMs are stored in secure strongrooms under CCTV surveillance.",
+    "tags": ["evm", "sealing", "strongroom", "security", "tamper-evident"]
+  },
+  {
+    "id": "counting-agents",
+    "q": "Who are counting agents?",
+    "a": "Counting agents are representatives appointed by candidates to observe the vote counting process. They ensure transparency and can raise objections on behalf of their candidate during counting.",
+    "tags": ["counting agent", "candidate", "observer", "transparency", "counting"]
+  },
+  {
+    "id": "evms-per-booth",
+    "q": "How many EVMs per booth?",
+    "a": "Each polling booth uses one Ballot Unit (BU) and one Control Unit (CU). If candidates exceed 16, additional BUs are linked to the same CU to accommodate all names.",
+    "tags": ["evm", "ballot unit", "control unit", "booth", "candidates"]
+  },
+  {
+    "id": "mock-poll",
+    "q": "What is a mock poll?",
+    "a": "A mock poll is a mandatory test run of EVMs conducted at every booth before actual polling begins. A minimum of 50 votes are cast and verified to confirm the machines are working correctly.",
+    "tags": ["mock poll", "evm", "testing", "verification", "polling day"]
+  },
+  {
+    "id": "green-protocol",
+    "q": "What is green protocol in elections?",
+    "a": "ECI's green protocol encourages eco-friendly election practices including reduced single-use plastic, digital campaigning over printed materials, and sustainable booth setup guidelines.",
+    "tags": ["green protocol", "eco-friendly", "environment", "digital campaign"]
+  },
+  {
+    "id": "postal-categories",
+    "q": "What are postal ballot categories?",
+    "a": "Postal ballots are available to service voters (armed forces, diplomats), senior citizens aged 80+, persons with disabilities, essential service workers on election duty, and preventive detention detainees.",
+    "tags": ["postal ballot", "service voter", "senior citizen", "pwd", "absentee"]
+  },
+  {
+    "id": "delimitation",
+    "q": "What is delimitation?",
+    "a": "Delimitation is the process of redrawing constituency boundaries by the Delimitation Commission based on the latest census data. It ensures roughly equal population representation per seat.",
+    "tags": ["delimitation", "constituency", "boundaries", "census", "commission"]
+  },
+  {
+    "id": "election-symbols",
+    "q": "How are election symbols allotted?",
+    "a": "ECI allots election symbols to candidates. Recognized national and state parties have reserved symbols, while independent and unrecognized party candidates choose from a free symbols list maintained by ECI.",
+    "tags": ["election symbol", "party", "independent", "allotment", "eci"]
+  },
+  {
+    "id": "election-expenditure",
+    "q": "What are election expenditure limits?",
+    "a": "ECI sets maximum spending limits for candidates that vary by state and election type. For Lok Sabha elections the cap ranges from ₹75–95 lakh depending on the state. Candidates must file expenditure accounts.",
+    "tags": ["expenditure", "spending limit", "candidate", "finance", "accounts"]
+  },
+  {
+    "id": "election-petition",
+    "q": "What is an election petition?",
+    "a": "An election petition is a legal challenge to election results filed in the High Court within 45 days of the result declaration. Grounds include corrupt practices or non-compliance with electoral law.",
+    "tags": ["election petition", "high court", "legal challenge", "corrupt practice"]
+  },
+  {
+    "id": "deregistration",
+    "q": "Can a voter's name be removed from the electoral roll?",
+    "a": "Yes, a name can be removed via Form 7 objection, or purged by ERO if the voter is deceased, has shifted permanently, or holds duplicate entries. Removal follows a verification process.",
+    "tags": ["deregistration", "form 7", "removal", "electoral roll", "ero"]
+  },
+  {
+    "id": "dual-membership",
+    "q": "Can someone contest from two constituencies?",
+    "a": "Yes, a candidate may contest from up to two constituencies simultaneously. If elected from both, they must vacate one seat within 14 days of the result, as prescribed by law.",
+    "tags": ["dual constituency", "two seats", "candidate", "vacate", "election law"]
+  },
+  {
+    "id": "floor-crossing",
+    "q": "What is the anti-defection law?",
+    "a": "The anti-defection law under the Tenth Schedule of the Constitution disqualifies elected members who voluntarily give up party membership or vote against the party whip without permission.",
+    "tags": ["anti-defection", "tenth schedule", "party whip", "disqualification"]
+  },
+  {
+    "id": "election-commission-powers",
+    "q": "What powers does ECI have?",
+    "a": "ECI has constitutional authority for superintendence, direction, and control of elections. It can postpone or cancel polls, order re-polls, and enforce the Model Code of Conduct.",
+    "tags": ["eci", "powers", "constitutional", "authority", "enforcement"]
+  },
+  {
+    "id": "voters-day",
+    "q": "What is National Voters' Day?",
+    "a": "National Voters' Day is celebrated on January 25 every year since 2011 to mark ECI's founding anniversary and encourage electoral participation, especially among newly eligible young voters.",
+    "tags": ["voters day", "january 25", "participation", "awareness", "youth"]
+  },
+  {
+    "id": "rti-elections",
+    "q": "Can I use RTI for election information?",
+    "a": "Yes, ECI and all election offices are public authorities under the Right to Information Act 2005. Citizens can file RTI requests for election-related data, expenditure records, and administrative decisions.",
+    "tags": ["rti", "right to information", "transparency", "public authority", "eci"]
   }
 ]

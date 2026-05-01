@@ -2,6 +2,7 @@ import { Router } from "express";
 import { firestoreService } from "../db/firestore-service.js";
 import { optionalAuth } from "../middleware/auth.js";
 import { createGenaiClient, runChatWithToolsAndStream } from "../services/chat-gemini.js";
+import log from "../lib/logger.js";
 
 const router = Router();
 
@@ -76,7 +77,7 @@ router.post("/", optionalAuth, async (req, res) => {
     res.write(`data: ${JSON.stringify({ text: "", done: true })}\n\n`);
     res.end();
   } catch (error) {
-    console.error("Chat error:", error.message);
+    log.error("chat_error", { error: error.message });
     const errMsg = error.message?.includes("API_KEY")
       ? "Invalid API key. Please check your GEMINI_API_KEY in the .env file."
       : "Sorry, I encountered an error. Please try again.";

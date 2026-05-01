@@ -1,4 +1,5 @@
 import { Router } from "express";
+import log from "../lib/logger.js";
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router.post("/event", (req, res) => {
   }
   if (process.env.NODE_ENV !== "test") {
     // Structured log only — no PII in meta by contract
-    console.info(JSON.stringify({ type: "analytics_event", event, meta: meta ?? {} }));
+    log.info("analytics_event", { event, meta: meta ?? {} });
   }
   res.json({ ok: true });
 });

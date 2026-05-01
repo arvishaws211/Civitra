@@ -16,7 +16,7 @@ async function loadMapsAPI() {
   try {
     const res = await fetch("/api/booth/maps-key");
     if (!res.ok) {
-      showToast("Maps API key not configured. Add MAPS_API_KEY to your .env file.", "error");
+      showBoothFallback();
       return false;
     }
     const { key } = await res.json();
@@ -37,7 +37,7 @@ async function loadMapsAPI() {
       document.head.appendChild(script);
     });
   } catch {
-    showToast("Failed to load Maps API key", "error");
+    showBoothFallback();
     return false;
   }
 }
@@ -328,4 +328,15 @@ function getMapStyles() {
     { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#1a2e1a" }] },
     { featureType: "transit", elementType: "geometry", stylers: [{ color: "#2a2a3e" }] },
   ];
+}
+
+function showBoothFallback() {
+  const placeholder = document.getElementById("booth-map-placeholder");
+  if (!placeholder) return;
+  placeholder.innerHTML = `
+    <div class="fallback-banner">
+      <strong>Booth lookup requires Google Maps</strong><br>
+      Use the <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener">ECI Electoral Search portal</a> directly to find your polling station.
+    </div>
+  `;
 }

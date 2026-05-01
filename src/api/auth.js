@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { firestoreService } from "../db/firestore-service.js";
 import { generateToken, verifyRecaptcha, requireAuth } from "../middleware/auth.js";
+import log from "../lib/logger.js";
 
 const router = Router();
 
@@ -44,7 +45,7 @@ router.post("/register", async (req, res) => {
       user: { id: result.lastInsertRowid, name: name.trim(), email: email.toLowerCase().trim() },
     });
   } catch (error) {
-    console.error("Register error:", error.message);
+    log.error("register_error", { error: error.message });
     res.status(500).json({ error: "Registration failed. Please try again." });
   }
 });
@@ -80,7 +81,7 @@ router.post("/login", async (req, res) => {
       user: { id: user.id, name: user.name, email: user.email },
     });
   } catch (error) {
-    console.error("Login error:", error.message);
+    log.error("login_error", { error: error.message });
     res.status(500).json({ error: "Login failed. Please try again." });
   }
 });
@@ -119,7 +120,7 @@ router.post("/forgot-password", async (req, res) => {
       resetToken: token,
     });
   } catch (error) {
-    console.error("Forgot password error:", error.message);
+    log.error("forgot_password_error", { error: error.message });
     res.status(500).json({ error: "Failed to process request." });
   }
 });
@@ -148,7 +149,7 @@ router.post("/reset-password", async (req, res) => {
 
     res.json({ message: "Password reset successfully. You can now log in." });
   } catch (error) {
-    console.error("Reset password error:", error.message);
+    log.error("reset_password_error", { error: error.message });
     res.status(500).json({ error: "Failed to reset password." });
   }
 });

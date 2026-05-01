@@ -1833,6 +1833,81 @@ body {
   padding: 20px;
 }
 
+/* ═══ Language picker ═══ */
+.sidebar__lang-picker {
+  padding: 8px 16px 12px;
+}
+
+.sidebar__lang-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.sidebar__lang-select {
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.sidebar__lang-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.lang-fallback {
+  margin-top: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: var(--error);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-xs);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* ═══ Fallback banners ═══ */
+.fallback-banner {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.fallback-banner a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ═══ prefers-reduced-motion ═══ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .bg-orb {
+    animation: none !important;
+  }
+}
+
 /* ═══ Seven-stage election journey ═══ */
 .journey {
   padding: 12px 20px 8px;

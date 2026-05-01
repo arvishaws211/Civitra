@@ -2,6 +2,7 @@ import { Router } from "express";
 import { GoogleGenAI } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
+import log from "../lib/logger.js";
 
 const router = Router();
 
@@ -81,7 +82,7 @@ ${(issues?.length ? issues : ["Economy & Jobs", "Education", "Healthcare", "Agri
       });
     }
   } catch (error) {
-    console.error("Manifesto compare error:", error.message);
+    log.error("manifesto_compare_error", { error: error.message });
     res.status(500).json({ error: "Failed to generate comparison. Please try again." });
   }
 });

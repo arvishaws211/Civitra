@@ -3,6 +3,7 @@ import { getFirestore } from "firebase-admin/firestore";
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import log from "../lib/logger.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,11 +17,9 @@ try {
     storageBucket: `${serviceAccount.project_id}.firebasestorage.app`,
   });
 
-  console.log("✅ Firebase Admin initialized with service account file");
+  log.info("firebase_init", { method: "service_account" });
 } catch {
-  console.log(
-    "⚠️ Service account file not found, falling back to Application Default Credentials."
-  );
+  log.warn("firebase_fallback", { reason: "service account not found, trying ADC" });
 
   try {
     const projectId = process.env.GOOGLE_CLOUD_PROJECT || process.env.GCLOUD_PROJECT || "civitra";
@@ -28,9 +27,9 @@ try {
       credential: admin.credential.applicationDefault(),
       storageBucket: `${projectId}.firebasestorage.app`,
     });
-    console.log("✅ Firebase Admin initialized using Application Default Credentials");
+    log.info("firebase_init", { method: "adc" });
   } catch (innerError) {
-    console.error("🔥 FATAL ERROR initializing Firebase ADC:", innerError.message);
+    log.error("firebase_init_fatal", { error: innerError.message });
     // Initialize a dummy app so it doesn't crash the server, but DB calls will fail
     admin.initializeApp({ projectId: "demo-project" });
   }

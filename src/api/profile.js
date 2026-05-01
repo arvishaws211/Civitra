@@ -3,6 +3,7 @@ import multer from "multer";
 import { extname } from "path";
 import { firestoreService } from "../db/firestore-service.js";
 import { requireAuth } from "../middleware/auth.js";
+import log from "../lib/logger.js";
 import { bucket } from "../config/firebase.js";
 
 const upload = multer({
@@ -62,7 +63,7 @@ router.post("/election-card", upload.single("electionCard"), async (req, res) =>
     await firestoreService.updateProfile(req.userId, { election_card_image: publicUrl });
     res.json({ imagePath: publicUrl, message: "Election card uploaded to cloud successfully." });
   } catch (error) {
-    console.error("Upload error:", error);
+    log.error("upload_error", { error: error?.message || String(error) });
     res.status(500).json({ error: "Failed to upload to cloud storage." });
   }
 });
