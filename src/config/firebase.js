@@ -19,14 +19,18 @@ try {
 } catch (error) {
   console.log("⚠️ Service account file not found, falling back to Application Default Credentials.");
   
-  const projectId = process.env.GOOGLE_CLOUD_PROJECT || process.env.GCLOUD_PROJECT;
-  
-  admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-    ...(projectId && { storageBucket: `${projectId}.firebasestorage.app` })
-  });
-  
-  console.log("✅ Firebase Admin initialized using Application Default Credentials");
+  try {
+    const projectId = process.env.GOOGLE_CLOUD_PROJECT || process.env.GCLOUD_PROJECT || "civitra";
+    admin.initializeApp({
+      credential: admin.credential.applicationDefault(),
+      storageBucket: `${projectId}.firebasestorage.app`
+    });
+    console.log("✅ Firebase Admin initialized using Application Default Credentials");
+  } catch (innerError) {
+    console.error("🔥 FATAL ERROR initializing Firebase ADC:", innerError.message);
+    // Initialize a dummy app so it doesn't crash the server, but DB calls will fail
+    admin.initializeApp({ projectId: "demo-project" });
+  }
 }
 
 export const db = admin.firestore();
