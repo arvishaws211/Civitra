@@ -23,10 +23,10 @@ router.post("/compare", async (req, res) => {
     const comparePrompt = `You are a non-partisan election education assistant. Compare the publicly available manifesto positions of the following Indian political parties on key policy issues.
 
 ## Parties to Compare:
-${parties.map(p => `- ${p}`).join("\n")}
+${parties.map((p) => `- ${p}`).join("\n")}
 
 ## Issues to Compare:
-${(issues?.length ? issues : ["Economy & Jobs", "Education", "Healthcare", "Agriculture", "Infrastructure", "Women's Empowerment", "Environment", "Digital India"]).map(i => `- ${i}`).join("\n")}
+${(issues?.length ? issues : ["Economy & Jobs", "Education", "Healthcare", "Agriculture", "Infrastructure", "Women's Empowerment", "Environment", "Digital India"]).map((i) => `- ${i}`).join("\n")}
 
 ### CRITICAL INSTRUCTIONS:
 1. Return ONLY a valid JSON object.
@@ -65,7 +65,10 @@ ${(issues?.length ? issues : ["Economy & Jobs", "Education", "Healthcare", "Agri
     });
 
     let text = response.text || "";
-    text = text.replace(/```json\s*/gi, "").replace(/```\s*/g, "").trim();
+    text = text
+      .replace(/```json\s*/gi, "")
+      .replace(/```\s*/g, "")
+      .trim();
 
     try {
       const result = JSON.parse(text);
@@ -105,7 +108,7 @@ router.get("/parties", (req, res) => {
       { name: "Biju Janata Dal (BJD)", abbr: "BJD", state: "Odisha" },
       { name: "YSR Congress Party (YSRCP)", abbr: "YSRCP", state: "Andhra Pradesh" },
     ],
-    disclaimer: "Party list is for educational comparison only. Civitra is strictly non-partisan."
+    disclaimer: "Party list is for educational comparison only. Civitra is strictly non-partisan.",
   });
 });
 

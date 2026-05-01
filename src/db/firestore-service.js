@@ -8,13 +8,17 @@ export const firestoreService = {
       ...userData,
       id: userRef.id,
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     });
     return { lastInsertRowid: userRef.id };
   },
 
   async findUserByEmail(email) {
-    const snapshot = await db.collection("users").where("email", "==", email.toLowerCase()).limit(1).get();
+    const snapshot = await db
+      .collection("users")
+      .where("email", "==", email.toLowerCase())
+      .limit(1)
+      .get();
     if (snapshot.empty) return null;
     return snapshot.docs[0].data();
   },
@@ -25,10 +29,13 @@ export const firestoreService = {
   },
 
   async updateProfile(id, data) {
-    await db.collection("users").doc(id).update({
-      ...data,
-      updated_at: new Date().toISOString()
-    });
+    await db
+      .collection("users")
+      .doc(id)
+      .update({
+        ...data,
+        updated_at: new Date().toISOString(),
+      });
   },
 
   // ── Chat History ─────────────────────────────────────────
@@ -38,27 +45,26 @@ export const firestoreService = {
       sessionId,
       role,
       message,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
     });
   },
 
   async getChatHistory(userId, sessionId) {
-    const snapshot = await db.collection("chats")
+    const snapshot = await db
+      .collection("chats")
       .where("userId", "==", userId)
       .where("sessionId", "==", sessionId)
       .orderBy("created_at", "asc")
       .limit(40)
       .get();
-    return snapshot.docs.map(doc => doc.data());
+    return snapshot.docs.map((doc) => doc.data());
   },
 
   async getChatSessions(userId) {
-    const snapshot = await db.collection("chats")
-      .where("userId", "==", userId)
-      .get();
-    
+    const snapshot = await db.collection("chats").where("userId", "==", userId).get();
+
     const sessions = {};
-    snapshot.docs.forEach(doc => {
+    snapshot.docs.forEach((doc) => {
       const data = doc.data();
       if (!sessions[data.sessionId]) {
         sessions[data.sessionId] = { started: data.created_at, last_active: data.created_at };
@@ -69,10 +75,12 @@ export const firestoreService = {
       }
     });
 
-    return Object.entries(sessions).map(([id, stats]) => ({
-      session_id: id,
-      ...stats
-    })).sort((a, b) => b.last_active.localeCompare(a.last_active));
+    return Object.entries(sessions)
+      .map(([id, stats]) => ({
+        session_id: id,
+        ...stats,
+      }))
+      .sort((a, b) => b.last_active.localeCompare(a.last_active));
   },
 
   // ── Voting Plans ─────────────────────────────────────────
@@ -82,17 +90,18 @@ export const firestoreService = {
       plan_data: planData,
       answers,
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     });
   },
 
   async getVotingPlans(userId) {
-    const snapshot = await db.collection("voting_plans")
+    const snapshot = await db
+      .collection("voting_plans")
       .where("userId", "==", userId)
       .orderBy("updated_at", "desc")
       .limit(10)
       .get();
-    return snapshot.docs.map(doc => doc.data());
+    return snapshot.docs.map((doc) => doc.data());
   },
 
   // ── Password Reset ───────────────────────────────────────
@@ -101,7 +110,7 @@ export const firestoreService = {
       userId,
       expires_at: expiresAt,
       used: false,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
     });
   },
 
@@ -115,5 +124,5 @@ export const firestoreService = {
 
   async markTokenUsed(token) {
     await db.collection("password_resets").doc(token).update({ used: true });
-  }
+  },
 };

@@ -20,20 +20,20 @@ router.get("/eci-links", (req, res) => {
     helpline: "1950",
     ceoLinks: {
       "Andhra Pradesh": "https://ceoandhra.nic.in/",
-      "Bihar": "https://ceobihar.nic.in/",
-      "Delhi": "https://ceodelhi.nic.in/",
-      "Gujarat": "https://ceo.gujarat.gov.in/",
-      "Karnataka": "https://ceo.karnataka.gov.in/",
-      "Kerala": "https://ceo.kerala.gov.in/",
+      Bihar: "https://ceobihar.nic.in/",
+      Delhi: "https://ceodelhi.nic.in/",
+      Gujarat: "https://ceo.gujarat.gov.in/",
+      Karnataka: "https://ceo.karnataka.gov.in/",
+      Kerala: "https://ceo.kerala.gov.in/",
       "Madhya Pradesh": "https://ceomadhyapradesh.nic.in/",
-      "Maharashtra": "https://ceo.maharashtra.gov.in/",
-      "Rajasthan": "https://ceorajasthan.nic.in/",
+      Maharashtra: "https://ceo.maharashtra.gov.in/",
+      Rajasthan: "https://ceorajasthan.nic.in/",
       "Tamil Nadu": "https://elections.tn.gov.in/",
-      "Telangana": "https://ceotelangana.nic.in/",
+      Telangana: "https://ceotelangana.nic.in/",
       "Uttar Pradesh": "https://ceo.up.nic.in/",
       "West Bengal": "https://ceowestbengal.nic.in/",
     },
-    note: "Civitra does NOT store any voter roll data. All verification is handled directly via official ECI portals."
+    note: "Civitra does NOT store any voter roll data. All verification is handled directly via official ECI portals.",
   });
 });
 

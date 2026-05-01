@@ -1,0 +1,9 @@
+node_modules
+coverage
+playwright-report
+test-results
+.env
+*.log
+Dockerfile
+.cursor
+package-lock.json

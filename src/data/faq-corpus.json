@@ -1,0 +1,122 @@
+[
+  {
+    "id": "nota",
+    "q": "What is NOTA?",
+    "a": "NOTA (None of the Above) is a ballot option on EVMs in India. If you select NOTA, you indicate none of the candidates are acceptable; it does not invalidate the election or trigger a re-poll. It is a symbolic protest vote.",
+    "tags": ["nota", "evm", "vote", "symbolic"]
+  },
+  {
+    "id": "form6",
+    "q": "How do I register as a new voter?",
+    "a": "Use Form 6 on the Voter Helpline App or https://voters.eci.gov.in/ with age and address proof, or submit offline to your BLO/ERO.",
+    "tags": ["registration", "form 6", "new voter", "online"]
+  },
+  {
+    "id": "evm",
+    "q": "How does the EVM work?",
+    "a": "Electronic Voting Machines (EVMs) record your vote electronically. VVPAT prints a slip visible for 7 seconds for verification. ECI trains officers on secure handling and counting procedures.",
+    "tags": ["evm", "vvpat", "machine", "voting"]
+  },
+  {
+    "id": "eligibility",
+    "q": "Who is eligible to vote?",
+    "a": "Indian citizens aged 18+ on the qualifying date, ordinarily resident in the constituency, and not disqualified under law may register and vote.",
+    "tags": ["eligibility", "age", "18", "citizen"]
+  },
+  {
+    "id": "nri",
+    "q": "Can NRIs vote?",
+    "a": "Overseas Indians can register via Form 6A if eligible; they vote in person at their designated polling station in India (not postal for Lok Sabha general elections in normal rules—verify current ECI guidance).",
+    "tags": ["nri", "form 6a", "overseas"]
+  },
+  {
+    "id": "documents",
+    "q": "What ID can I use at the polling booth?",
+    "a": "EPIC is common but ECI allows 12 alternative photo IDs including Aadhaar, passport, driving licence, and others listed on the ECI website.",
+    "tags": ["documents", "id", "epic", "booth"]
+  },
+  {
+    "id": "mcc",
+    "q": "What is the Model Code of Conduct?",
+    "a": "MCC is ECI guidelines for fair campaigning: restrictions on new announcements, misuse of official machinery, and corrupt practices during elections.",
+    "tags": ["mcc", "conduct", "campaign"]
+  },
+  {
+    "id": "counting",
+    "q": "How are votes counted?",
+    "a": "Votes are counted under ECI supervision with strongrooms, VVPAT slips sampled per ECI protocol, and results declared officially.",
+    "tags": ["counting", "results", "vvpat"]
+  },
+  {
+    "id": "helpline",
+    "q": "What is the voter helpline number?",
+    "a": "National voter helpline: 1950. You can also use the Voter Helpline mobile app for registration status and booth information.",
+    "tags": ["helpline", "1950", "contact"]
+  },
+  {
+    "id": "postal",
+    "q": "Who can use postal ballot?",
+    "a": "Certain service voters, special categories, and provisions defined by ECI/law may use postal ballot; check current ECI notifications for your category.",
+    "tags": ["postal", "absentee", "service voter"]
+  },
+  {
+    "id": "epic",
+    "q": "What is an EPIC number?",
+    "a": "EPIC (Electors Photo Identity Card) is your voter ID number on the card issued by ECI; it helps identify you on the electoral roll.",
+    "tags": ["epic", "voter id", "card"]
+  },
+  {
+    "id": "phases",
+    "q": "What are election phases?",
+    "a": "Large states may hold polling in multiple phases for security and logistics; dates are announced in the ECI election schedule.",
+    "tags": ["phases", "schedule", "dates"]
+  },
+  {
+    "id": "objection",
+    "q": "How do I object to a wrong entry in the roll?",
+    "a": "Use Form 7 as prescribed by ECI and follow your CEO/ERO office process with supporting evidence.",
+    "tags": ["form 7", "objection", "roll"]
+  },
+  {
+    "id": "correction",
+    "q": "How do I correct my voter details?",
+    "a": "Use Form 8 for corrections or shifting within rules; online via voters portal or offline through BLO/ERO.",
+    "tags": ["form 8", "correction", "address"]
+  },
+  {
+    "id": "sec145",
+    "q": "What is Section 144 during elections?",
+    "a": "Local administration may impose orders restricting gatherings; always follow lawful orders and verify with local authorities—this is general civic information, not legal advice.",
+    "tags": ["144", "law", "gathering"]
+  },
+  {
+    "id": "women",
+    "q": "Are there all-women polling booths?",
+    "a": "ECI may establish all-women managed booths in some areas for accessibility and comfort—availability varies by election and state.",
+    "tags": ["women", "booth", "accessibility"]
+  },
+  {
+    "id": "pwd",
+    "q": "What facilities exist for voters with disabilities?",
+    "a": "ECI promotes ramps, wheelchairs, volunteers, and accessible materials; report gaps to the presiding officer or helpline 1950.",
+    "tags": ["pwd", "accessibility", "ramp"]
+  },
+  {
+    "id": "turnout",
+    "q": "Why does voter turnout matter?",
+    "a": "Higher turnout strengthens representative legitimacy; every eligible vote shapes outcomes within the constitutional framework.",
+    "tags": ["turnout", "democracy"]
+  },
+  {
+    "id": "eci",
+    "q": "Who conducts elections in India?",
+    "a": "The Election Commission of India conducts Lok Sabha and Assembly elections; State Election Commissions conduct local body polls per constitutional allocation.",
+    "tags": ["eci", "commission", "authority"]
+  },
+  {
+    "id": "vvpat-verify",
+    "q": "Can I verify VVPAT with my vote?",
+    "a": "VVPAT displays a paper slip for verification; ECI defines verification protocols during counting and audits—follow on-booth instructions from officials.",
+    "tags": ["vvpat", "verify", "slip"]
+  }
+]

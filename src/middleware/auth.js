@@ -19,7 +19,8 @@ export function requireAuth(req, res, next) {
   }
   try {
     const decoded = verifyToken(authHeader.split(" ")[1]);
-    req.userId = decoded.userId;
+    const payload = /** @type {{ userId?: string }} */ (decoded);
+    req.userId = payload.userId;
     next();
   } catch {
     return res.status(401).json({ error: "Invalid or expired token" });
@@ -32,8 +33,11 @@ export function optionalAuth(req, res, next) {
   if (authHeader?.startsWith("Bearer ")) {
     try {
       const decoded = verifyToken(authHeader.split(" ")[1]);
-      req.userId = decoded.userId;
-    } catch { /* ignore */ }
+      const payload = /** @type {{ userId?: string }} */ (decoded);
+      req.userId = payload.userId;
+    } catch {
+      /* ignore */
+    }
   }
   next();
 }

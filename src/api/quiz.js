@@ -52,7 +52,10 @@ Rules:
     });
 
     let text = response.text || "";
-    text = text.replace(/```json\s*/gi, "").replace(/```\s*/g, "").trim();
+    text = text
+      .replace(/```json\s*/gi, "")
+      .replace(/```\s*/g, "")
+      .trim();
 
     try {
       const questions = JSON.parse(text);

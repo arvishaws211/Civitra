@@ -35,7 +35,7 @@ router.post("/register", async (req, res) => {
     const result = await firestoreService.createUser({
       name: name.trim(),
       email: email.toLowerCase().trim(),
-      password: hash
+      password: hash,
     });
     const token = generateToken(result.lastInsertRowid);
 
@@ -103,7 +103,9 @@ router.post("/forgot-password", async (req, res) => {
 
     // Always respond success (don't reveal if email exists)
     if (!user) {
-      return res.json({ message: "If an account exists with this email, a reset link has been generated." });
+      return res.json({
+        message: "If an account exists with this email, a reset link has been generated.",
+      });
     }
 
     const token = crypto.randomBytes(32).toString("hex");

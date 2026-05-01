@@ -1,6 +1,6 @@
 /**
  * Civitra Knowledge Base — Indian Election Process
- * 
+ *
  * Comprehensive reference data used as context grounding for the AI assistant.
  * This acts as a lightweight RAG layer — injected into the conversation context
  * to ensure accurate, hallucination-resistant responses.

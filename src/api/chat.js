@@ -1,25 +1,24 @@
 import { Router } from "express";
-import { GoogleGenAI } from "@google/genai";
-import SYSTEM_PROMPT from "../config/system-prompt.js";
-import KNOWLEDGE_BASE from "../config/knowledge-base.js";
 import { firestoreService } from "../db/firestore-service.js";
 import { optionalAuth } from "../middleware/auth.js";
+import { createGenaiClient, runChatWithToolsAndStream } from "../services/chat-gemini.js";
 
 const router = Router();
 
-// ── In-memory conversation store (fallback for guests) ─────
 const sessions = new Map();
 const MAX_HISTORY = 20;
 const SESSION_TTL = 30 * 60 * 1000;
 
-setInterval(() => {
-  const now = Date.now();
-  for (const [id, session] of sessions) {
-    if (now - session.lastActive > SESSION_TTL) sessions.delete(id);
-  }
-}, 10 * 60 * 1000);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [id, session] of sessions) {
+      if (now - session.lastActive > SESSION_TTL) sessions.delete(id);
+    }
+  },
+  10 * 60 * 1000
+);
 
-// ── Chat endpoint (streaming via SSE) ──────────────────────
 router.post("/", optionalAuth, async (req, res) => {
   const { message, sessionId } = req.body;
 
@@ -33,20 +32,18 @@ router.post("/", optionalAuth, async (req, res) => {
     });
   }
 
-  // SSE headers
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
   res.setHeader("X-Accel-Buffering", "no");
 
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const ai = createGenaiClient(process.env.GEMINI_API_KEY);
 
-    // Build history: from DB if logged in, otherwise from memory
     let history = [];
     if (req.userId) {
       const dbHistory = await firestoreService.getChatHistory(req.userId, sessionId);
-      history = dbHistory.map(h => ({ role: h.role, parts: [{ text: h.message }] }));
+      history = dbHistory.map((h) => ({ role: h.role, parts: [{ text: h.message }] }));
     } else {
       if (!sessions.has(sessionId)) {
         sessions.set(sessionId, { history: [], lastActive: Date.now() });
@@ -56,38 +53,14 @@ router.post("/", optionalAuth, async (req, res) => {
       history = session.history;
     }
 
-    const contents = [
-      ...history,
-      { role: "user", parts: [{ text: message }] },
-    ];
+    const contents = [...history, { role: "user", parts: [{ text: message }] }];
 
-    const response = await ai.models.generateContentStream({
-      model: "gemini-2.5-flash",
-      config: {
-        systemInstruction: SYSTEM_PROMPT + "\n\n## Reference Knowledge Base\n" + KNOWLEDGE_BASE,
-        temperature: 0.7,
-        topP: 0.9,
-        maxOutputTokens: 2048,
-      },
-      contents,
-    });
+    const fullResponse = await runChatWithToolsAndStream(ai, contents, res);
 
-    let fullResponse = "";
-
-    for await (const chunk of response) {
-      const text = chunk.text || "";
-      if (text) {
-        fullResponse += text;
-        res.write(`data: ${JSON.stringify({ text, done: false })}\n\n`);
-      }
-    }
-
-    // Persist to DB if logged in
     if (req.userId) {
       await firestoreService.saveChatMessage(req.userId, sessionId, "user", message);
       await firestoreService.saveChatMessage(req.userId, sessionId, "model", fullResponse);
     } else {
-      // Fallback: in-memory
       const session = sessions.get(sessionId);
       if (session) {
         session.history.push(
@@ -112,7 +85,6 @@ router.post("/", optionalAuth, async (req, res) => {
   }
 });
 
-// ── Get suggestions ────────────────────────────────────────
 router.get("/suggestions", (req, res) => {
   res.json({
     suggestions: [

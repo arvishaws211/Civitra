@@ -1,67 +1,157 @@
-import { showToast } from './app.js';
-import { authHeaders } from './auth.js';
+import { showToast } from "./app.js";
+import { authHeaders } from "./auth.js";
 
-const STATES = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi','Jammu & Kashmir','Ladakh','Puducherry','Chandigarh','Andaman & Nicobar','Dadra Nagar Haveli & Daman Diu','Lakshadweep'];
+const STATES = [
+  "Andhra Pradesh",
+  "Arunachal Pradesh",
+  "Assam",
+  "Bihar",
+  "Chhattisgarh",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal Pradesh",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Madhya Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar Pradesh",
+  "Uttarakhand",
+  "West Bengal",
+  "Delhi",
+  "Jammu & Kashmir",
+  "Ladakh",
+  "Puducherry",
+  "Chandigarh",
+  "Andaman & Nicobar",
+  "Dadra Nagar Haveli & Daman Diu",
+  "Lakshadweep",
+];
 
 const STEPS = [
-  { key: 'age', title: 'How old are you?', desc: 'Your age determines your eligibility.', type: 'input', inputType: 'number', placeholder: 'Enter your age', min: 1, max: 120 },
-  { key: 'state', title: 'Which state do you reside in?', desc: 'Election rules can vary by state.', type: 'select', options: STATES },
-  { key: 'isRegistered', title: 'Are you registered as a voter?', desc: 'Do you have your name on the electoral roll?', type: 'choice', options: [{ label: 'Yes, I am registered', value: true }, { label: 'No / Not sure', value: false }] },
-  { key: 'hasVoterId', title: 'Do you have a Voter ID (EPIC)?', desc: 'The Elector\'s Photo Identity Card issued by ECI.', type: 'choice', options: [{ label: 'Yes, I have it', value: true }, { label: 'No, I don\'t have one', value: false }] },
-  { key: 'isFirstTime', title: 'Is this your first time voting?', desc: 'We\'ll add extra guidance if needed.', type: 'choice', options: [{ label: 'Yes, first time! 🎉', value: true }, { label: 'No, I\'ve voted before', value: false }] },
-  { key: 'extras', title: 'Any of these apply to you?', desc: 'Select all that apply for personalized guidance.', type: 'multi', options: [{ label: 'I am an NRI (Non-Resident Indian)', key: 'isNRI' }, { label: 'I am a person with disability', key: 'hasPwD' }, { label: 'I am a senior citizen (80+)', key: 'isSenior' }, { label: 'None of the above', key: 'isNone' }] },
+  {
+    key: "age",
+    title: "How old are you?",
+    desc: "Your age determines your eligibility.",
+    type: "input",
+    inputType: "number",
+    placeholder: "Enter your age",
+    min: 1,
+    max: 120,
+  },
+  {
+    key: "state",
+    title: "Which state do you reside in?",
+    desc: "Election rules can vary by state.",
+    type: "select",
+    options: STATES,
+  },
+  {
+    key: "isRegistered",
+    title: "Are you registered as a voter?",
+    desc: "Do you have your name on the electoral roll?",
+    type: "choice",
+    options: [
+      { label: "Yes, I am registered", value: true },
+      { label: "No / Not sure", value: false },
+    ],
+  },
+  {
+    key: "hasVoterId",
+    title: "Do you have a Voter ID (EPIC)?",
+    desc: "The Elector's Photo Identity Card issued by ECI.",
+    type: "choice",
+    options: [
+      { label: "Yes, I have it", value: true },
+      { label: "No, I don't have one", value: false },
+    ],
+  },
+  {
+    key: "isFirstTime",
+    title: "Is this your first time voting?",
+    desc: "We'll add extra guidance if needed.",
+    type: "choice",
+    options: [
+      { label: "Yes, first time! 🎉", value: true },
+      { label: "No, I've voted before", value: false },
+    ],
+  },
+  {
+    key: "extras",
+    title: "Any of these apply to you?",
+    desc: "Select all that apply for personalized guidance.",
+    type: "multi",
+    options: [
+      { label: "I am an NRI (Non-Resident Indian)", key: "isNRI" },
+      { label: "I am a person with disability", key: "hasPwD" },
+      { label: "I am a senior citizen (80+)", key: "isSenior" },
+      { label: "None of the above", key: "isNone" },
+    ],
+  },
 ];
 
 let currentStep = 0;
 let answers = {};
-let sid = '';
+let sid = "";
 
 export function initVotingPlan(sessionId) {
   sid = sessionId;
   renderStep();
-  document.getElementById('plan-next').addEventListener('click', nextStep);
-  document.getElementById('plan-prev').addEventListener('click', prevStep);
+  document.getElementById("plan-next").addEventListener("click", nextStep);
+  document.getElementById("plan-prev").addEventListener("click", prevStep);
 }
 
 function renderStep() {
   const step = STEPS[currentStep];
-  const container = document.getElementById('plan-step');
-  const progress = document.getElementById('plan-progress-bar');
+  const container = document.getElementById("plan-step");
+  const progress = document.getElementById("plan-progress-bar");
   progress.style.width = `${((currentStep + 1) / STEPS.length) * 100}%`;
-  document.getElementById('plan-prev').style.display = currentStep > 0 ? 'inline-flex' : 'none';
-  const nextBtn = document.getElementById('plan-next');
-  nextBtn.textContent = currentStep === STEPS.length - 1 ? 'Generate My Plan' : 'Next';
+  document.getElementById("plan-prev").style.display = currentStep > 0 ? "inline-flex" : "none";
+  const nextBtn = document.getElementById("plan-next");
+  nextBtn.textContent = currentStep === STEPS.length - 1 ? "Generate My Plan" : "Next";
 
   let html = `<h3>${step.title}</h3><p>${step.desc}</p>`;
 
-  if (step.type === 'input') {
-    html += `<input class="plan__input" type="${step.inputType}" id="step-input" placeholder="${step.placeholder}" min="${step.min || ''}" max="${step.max || ''}" value="${answers[step.key] || ''}">`;
-  } else if (step.type === 'select') {
-    html += `<select class="plan__input plan__select" id="step-input"><option value="">-- Select --</option>${step.options.map(o => `<option value="${o}" ${answers[step.key] === o ? 'selected' : ''}>${o}</option>`).join('')}</select>`;
-  } else if (step.type === 'choice') {
-    html += `<div class="plan__options">${step.options.map(o => `<div class="plan__option ${answers[step.key] === o.value ? 'selected' : ''}" data-value="${o.value}"><div class="plan__option-radio"></div>${o.label}</div>`).join('')}</div>`;
-  } else if (step.type === 'multi') {
-    html += `<div class="plan__options">${step.options.map(o => `<div class="plan__option ${answers[o.key] ? 'selected' : ''}" data-key="${o.key}"><div class="plan__option-check"></div>${o.label}</div>`).join('')}</div>`;
+  if (step.type === "input") {
+    html += `<input class="plan__input" type="${step.inputType}" id="step-input" placeholder="${step.placeholder}" min="${step.min || ""}" max="${step.max || ""}" value="${answers[step.key] || ""}">`;
+  } else if (step.type === "select") {
+    html += `<select class="plan__input plan__select" id="step-input"><option value="">-- Select --</option>${step.options.map((o) => `<option value="${o}" ${answers[step.key] === o ? "selected" : ""}>${o}</option>`).join("")}</select>`;
+  } else if (step.type === "choice") {
+    html += `<div class="plan__options">${step.options.map((o) => `<div class="plan__option ${answers[step.key] === o.value ? "selected" : ""}" data-value="${o.value}"><div class="plan__option-radio"></div>${o.label}</div>`).join("")}</div>`;
+  } else if (step.type === "multi") {
+    html += `<div class="plan__options">${step.options.map((o) => `<div class="plan__option ${answers[o.key] ? "selected" : ""}" data-key="${o.key}"><div class="plan__option-check"></div>${o.label}</div>`).join("")}</div>`;
   }
 
   container.innerHTML = html;
 
   // Bind choice/multi events
-  container.querySelectorAll('.plan__option').forEach(opt => {
-    opt.addEventListener('click', (e) => {
+  container.querySelectorAll(".plan__option").forEach((opt) => {
+    opt.addEventListener("click", (e) => {
       e.preventDefault();
-      if (step.type === 'choice') {
-        container.querySelectorAll('.plan__option').forEach(o => o.classList.remove('selected'));
-        opt.classList.add('selected');
+      if (step.type === "choice") {
+        container.querySelectorAll(".plan__option").forEach((o) => o.classList.remove("selected"));
+        opt.classList.add("selected");
         const val = opt.dataset.value;
-        answers[step.key] = val === 'true' ? true : val === 'false' ? false : val;
-      } else if (step.type === 'multi') {
-        const isNone = opt.dataset.key === 'isNone';
+        answers[step.key] = val === "true" ? true : val === "false" ? false : val;
+      } else if (step.type === "multi") {
+        const isNone = opt.dataset.key === "isNone";
         if (isNone) {
           // If "None" is selected, unselect everything else
-          container.querySelectorAll('.plan__option').forEach(o => {
-            if (o.dataset.key !== 'isNone') {
-              o.classList.remove('selected');
+          container.querySelectorAll(".plan__option").forEach((o) => {
+            if (o.dataset.key !== "isNone") {
+              o.classList.remove("selected");
               answers[o.dataset.key] = false;
             }
           });
@@ -69,12 +159,12 @@ function renderStep() {
           // If anything else is selected, unselect "None"
           const noneOpt = container.querySelector('[data-key="isNone"]');
           if (noneOpt) {
-            noneOpt.classList.remove('selected');
-            answers['isNone'] = false;
+            noneOpt.classList.remove("selected");
+            answers["isNone"] = false;
           }
         }
-        opt.classList.toggle('selected');
-        answers[opt.dataset.key] = opt.classList.contains('selected');
+        opt.classList.toggle("selected");
+        answers[opt.dataset.key] = opt.classList.contains("selected");
       }
     });
   });
@@ -82,9 +172,9 @@ function renderStep() {
 
 function collectCurrentAnswer() {
   const step = STEPS[currentStep];
-  if (step.type === 'input' || step.type === 'select') {
-    const el = document.getElementById('step-input');
-    if (el) answers[step.key] = step.inputType === 'number' ? parseInt(el.value) : el.value;
+  if (step.type === "input" || step.type === "select") {
+    const el = document.getElementById("step-input");
+    if (el) answers[step.key] = step.inputType === "number" ? parseInt(el.value) : el.value;
   }
 }
 
@@ -100,67 +190,81 @@ function nextStep() {
 
 function prevStep() {
   collectCurrentAnswer();
-  if (currentStep > 0) { currentStep--; renderStep(); }
+  if (currentStep > 0) {
+    currentStep--;
+    renderStep();
+  }
 }
 
 async function generatePlan() {
-  const wizard = document.getElementById('plan-wizard');
-  const result = document.getElementById('plan-result');
-  wizard.style.display = 'none';
-  result.style.display = 'block';
-  const content = document.getElementById('plan-result-content');
-  content.innerHTML = '<div style="text-align:center;padding:60px 20px"><div class="spinner"></div><p style="margin-top:16px;color:var(--text-secondary)">Generating your personalized voting plan...</p></div>';
+  const wizard = document.getElementById("plan-wizard");
+  const result = document.getElementById("plan-result");
+  wizard.style.display = "none";
+  result.style.display = "block";
+  const content = document.getElementById("plan-result-content");
+  content.innerHTML =
+    '<div style="text-align:center;padding:60px 20px"><div class="spinner"></div><p style="margin-top:16px;color:var(--text-secondary)">Generating your personalized voting plan...</p></div>';
 
   try {
-    const res = await fetch('/api/voting-plan', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...authHeaders() },
+    const res = await fetch("/api/voting-plan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeaders() },
       body: JSON.stringify(answers),
     });
-    if (!res.ok) throw new Error('Failed');
+    if (!res.ok) throw new Error("Failed");
     const plan = await res.json();
     renderPlan(plan);
   } catch (err) {
-    content.innerHTML = '<p style="color:var(--error);text-align:center;padding:40px">Failed to generate plan. Please try again.</p>';
-    showToast('Failed to generate voting plan', 'error');
+    content.innerHTML =
+      '<p style="color:var(--error);text-align:center;padding:40px">Failed to generate plan. Please try again.</p>';
+    showToast("Failed to generate voting plan", "error");
   }
 }
 
 function renderPlan(plan) {
-  const content = document.getElementById('plan-result-content');
+  const content = document.getElementById("plan-result-content");
 
   // If we got rawContent, try to parse it as JSON one last time (AI sometimes returns valid JSON string inside rawContent)
   if (plan.rawContent) {
     try {
-      const cleanedText = plan.rawContent.replace(/```json\s*/gi, "").replace(/```\s*/g, "").trim();
+      const cleanedText = plan.rawContent
+        .replace(/```json\s*/gi, "")
+        .replace(/```\s*/g, "")
+        .trim();
       const parsed = JSON.parse(cleanedText);
       // If parsing succeeds, merge with original plan object
       Object.assign(plan, parsed);
       delete plan.rawContent;
     } catch (e) {
       // If it's truly not JSON, just show it as markdown
-      content.innerHTML = `<div class="plan__result-card glass-card"><h3>📋 ${plan.title}</h3>${typeof marked !== 'undefined' ? marked.parse(plan.rawContent) : plan.rawContent}</div>` + resetBtn();
+      content.innerHTML =
+        `<div class="plan__result-card glass-card"><h3>📋 ${plan.title}</h3>${typeof marked !== "undefined" ? marked.parse(plan.rawContent) : plan.rawContent}</div>` +
+        resetBtn();
       return;
     }
   }
 
-  let html = `<div class="plan__result-card glass-card"><h3>📋 ${plan.title}</h3><p style="color:var(--text-secondary);margin-bottom:16px">${plan.summary || ''}</p>`;
+  let html = `<div class="plan__result-card glass-card"><h3>📋 ${plan.title}</h3><p style="color:var(--text-secondary);margin-bottom:16px">${plan.summary || ""}</p>`;
   if (plan.steps?.length) {
     html += '<ul class="plan__checklist">';
-    plan.steps.forEach(s => {
+    plan.steps.forEach((s) => {
       html += `<li><div class="plan__check" onclick="this.classList.toggle('checked')"></div><div><div class="plan__step-title">Step ${s.step}: ${s.title}</div><div class="plan__step-desc">${s.description}</div>`;
       if (s.deadline) html += `<div class="plan__step-meta">⏰ ${s.deadline}</div>`;
-      if (s.documents?.length) html += `<div class="plan__step-meta">📄 ${s.documents.join(', ')}</div>`;
-      if (s.link) html += `<div class="plan__step-meta">🔗 <a href="${s.link}" target="_blank">${s.link}</a></div>`;
-      html += '</div></li>';
+      if (s.documents?.length)
+        html += `<div class="plan__step-meta">📄 ${s.documents.join(", ")}</div>`;
+      if (s.link)
+        html += `<div class="plan__step-meta">🔗 <a href="${s.link}" target="_blank">${s.link}</a></div>`;
+      html += "</div></li>";
     });
-    html += '</ul></div>';
+    html += "</ul></div>";
   }
 
   if (plan.tips?.length) {
     html += '<div class="plan__tips"><h4>💡 Tips for You</h4><ul>';
-    plan.tips.forEach(t => { html += `<li>${t}</li>`; });
-    html += '</ul></div>';
+    plan.tips.forEach((t) => {
+      html += `<li>${t}</li>`;
+    });
+    html += "</ul></div>";
   }
 
   if (plan.emergencyContacts) {
@@ -172,5 +276,5 @@ function renderPlan(plan) {
 }
 
 function resetBtn() {
-  return '<div class="plan__result-actions"><button class="btn btn--ghost" onclick="document.getElementById(\'plan-wizard\').style.display=\'block\';document.getElementById(\'plan-result\').style.display=\'none\'">← Start Over</button></div>';
+  return "<div class=\"plan__result-actions\"><button class=\"btn btn--ghost\" onclick=\"document.getElementById('plan-wizard').style.display='block';document.getElementById('plan-result').style.display='none'\">← Start Over</button></div>";
 }

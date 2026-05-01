@@ -70,24 +70,44 @@ const stmts = {
   // Users
   createUser: db.prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)"),
   findByEmail: db.prepare("SELECT * FROM users WHERE email = ?"),
-  findById: db.prepare("SELECT id, name, email, election_card_number, election_card_image, constituency, state, created_at FROM users WHERE id = ?"),
-  updateProfile: db.prepare("UPDATE users SET election_card_number = ?, election_card_image = ?, constituency = ?, state = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"),
-  updatePassword: db.prepare("UPDATE users SET password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"),
+  findById: db.prepare(
+    "SELECT id, name, email, election_card_number, election_card_image, constituency, state, created_at FROM users WHERE id = ?"
+  ),
+  updateProfile: db.prepare(
+    "UPDATE users SET election_card_number = ?, election_card_image = ?, constituency = ?, state = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"
+  ),
+  updatePassword: db.prepare(
+    "UPDATE users SET password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"
+  ),
   updateName: db.prepare("UPDATE users SET name = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"),
 
   // Chat
-  saveMessage: db.prepare("INSERT INTO chat_history (user_id, session_id, role, message) VALUES (?, ?, ?, ?)"),
-  getHistory: db.prepare("SELECT role, message, created_at FROM chat_history WHERE user_id = ? AND session_id = ? ORDER BY created_at ASC LIMIT 40"),
-  getSessions: db.prepare("SELECT DISTINCT session_id, MIN(created_at) as started, MAX(created_at) as last_active FROM chat_history WHERE user_id = ? GROUP BY session_id ORDER BY last_active DESC LIMIT 20"),
+  saveMessage: db.prepare(
+    "INSERT INTO chat_history (user_id, session_id, role, message) VALUES (?, ?, ?, ?)"
+  ),
+  getHistory: db.prepare(
+    "SELECT role, message, created_at FROM chat_history WHERE user_id = ? AND session_id = ? ORDER BY created_at ASC LIMIT 40"
+  ),
+  getSessions: db.prepare(
+    "SELECT DISTINCT session_id, MIN(created_at) as started, MAX(created_at) as last_active FROM chat_history WHERE user_id = ? GROUP BY session_id ORDER BY last_active DESC LIMIT 20"
+  ),
 
   // Voting Plans
   savePlan: db.prepare("INSERT INTO voting_plans (user_id, plan_data, answers) VALUES (?, ?, ?)"),
-  getPlans: db.prepare("SELECT * FROM voting_plans WHERE user_id = ? ORDER BY updated_at DESC LIMIT 10"),
-  getLatestPlan: db.prepare("SELECT * FROM voting_plans WHERE user_id = ? ORDER BY updated_at DESC LIMIT 1"),
+  getPlans: db.prepare(
+    "SELECT * FROM voting_plans WHERE user_id = ? ORDER BY updated_at DESC LIMIT 10"
+  ),
+  getLatestPlan: db.prepare(
+    "SELECT * FROM voting_plans WHERE user_id = ? ORDER BY updated_at DESC LIMIT 1"
+  ),
 
   // Password Reset
-  createResetToken: db.prepare("INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES (?, ?, ?)"),
-  findResetToken: db.prepare("SELECT * FROM password_reset_tokens WHERE token = ? AND used = 0 AND expires_at > datetime('now')"),
+  createResetToken: db.prepare(
+    "INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES (?, ?, ?)"
+  ),
+  findResetToken: db.prepare(
+    "SELECT * FROM password_reset_tokens WHERE token = ? AND used = 0 AND expires_at > datetime('now')"
+  ),
   markTokenUsed: db.prepare("UPDATE password_reset_tokens SET used = 1 WHERE token = ?"),
 };
 

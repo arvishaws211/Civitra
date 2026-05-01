@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": [
+    "src/**/*.js",
+    "server.js",
+    "tests/unit/**/*.js",
+    "tests/integration/**/*.js",
+    "vitest.config.js",
+    "playwright.config.js",
+    "eslint.config.js",
+    "types/**/*.d.ts"
+  ],
+  "exclude": ["node_modules", "tests/e2e", "coverage"]
+}

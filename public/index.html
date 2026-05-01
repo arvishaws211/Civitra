@@ -1,493 +1,738 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Civitra — AI-powered Election Process Education Assistant. Demystifying Indian democracy through interactive conversation.">
-  <meta name="theme-color" content="#0a0e1a">
-  <title>Civitra — Clarity in Every Vote</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  <!-- ── Animated Background ──────────────────────────── -->
-  <div class="bg-gradient" aria-hidden="true">
-    <div class="bg-orb bg-orb--saffron"></div>
-    <div class="bg-orb bg-orb--white"></div>
-    <div class="bg-orb bg-orb--green"></div>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Civitra — AI-powered Election Process Education Assistant. Demystifying Indian democracy through interactive conversation."
+    />
+    <meta name="theme-color" content="#0a0e1a" />
+    <title>Civitra — Clarity in Every Vote</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <!-- ── Animated Background ──────────────────────────── -->
+    <div class="bg-gradient" aria-hidden="true">
+      <div class="bg-orb bg-orb--saffron"></div>
+      <div class="bg-orb bg-orb--white"></div>
+      <div class="bg-orb bg-orb--green"></div>
+    </div>
 
-  <!-- ── App Shell ────────────────────────────────────── -->
-  <div id="app" class="app">
-
-    <!-- ── Sidebar Navigation ─────────────────────────── -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar__brand">
-        <div class="sidebar__logo">
-          <img src="/assets/logo.png" alt="Civitra Logo" class="logo-img">
-          <div>
-            <h1 class="sidebar__title">Civitra</h1>
-            <p class="sidebar__tagline">Clarity in Every Vote</p>
+    <!-- ── App Shell ────────────────────────────────────── -->
+    <div id="app" class="app">
+      <!-- ── Sidebar Navigation ─────────────────────────── -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__brand">
+          <div class="sidebar__logo">
+            <img src="/assets/logo.png" alt="Civitra Logo" class="logo-img" />
+            <div>
+              <h1 class="sidebar__title">Civitra</h1>
+              <p class="sidebar__tagline">Clarity in Every Vote</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <nav class="sidebar__nav">
-        <button class="nav-item active" data-view="chat" id="nav-chat">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        <nav class="sidebar__nav">
+          <button class="nav-item active" data-view="chat" id="nav-chat">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+            </svg>
+            <span>Chat</span>
+          </button>
+          <button class="nav-item" data-view="learn" id="nav-learn">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
+              <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
+            </svg>
+            <span>Learn</span>
+          </button>
+          <button class="nav-item" data-view="plan" id="nav-plan">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+            <span>My Voting Plan</span>
+          </button>
+          <button class="nav-item" data-view="quiz" id="nav-quiz">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <span>Quiz</span>
+          </button>
+          <button class="nav-item" data-view="booth" id="nav-booth">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>Find Booth</span>
+          </button>
+          <button class="nav-item" data-view="manifesto" id="nav-manifesto">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <line x1="3" y1="9" x2="21" y2="9" />
+              <line x1="9" y1="21" x2="9" y2="9" />
+            </svg>
+            <span>Manifesto</span>
+          </button>
+          <button class="nav-item" data-view="profile" id="nav-profile" style="display: none">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span id="sidebar-user-name">Profile</span>
+          </button>
+          <button class="nav-item" id="logout-btn" style="display: none; color: var(--error)">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            <span>Sign Out</span>
+          </button>
+        </nav>
+
+        <div class="sidebar__footer">
+          <div class="sidebar__disclaimer">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span>Non-partisan. Process-focused. Powered by Gemini AI.</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ── Mobile Header ──────────────────────────────── -->
+      <header class="mobile-header" id="mobile-header">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
           </svg>
-          <span>Chat</span>
         </button>
-        <button class="nav-item" data-view="learn" id="nav-learn">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
-          </svg>
-          <span>Learn</span>
-        </button>
-        <button class="nav-item" data-view="plan" id="nav-plan">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-          </svg>
-          <span>My Voting Plan</span>
-        </button>
-        <button class="nav-item" data-view="quiz" id="nav-quiz">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
-          <span>Quiz</span>
-        </button>
-        <button class="nav-item" data-view="booth" id="nav-booth">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-          </svg>
-          <span>Find Booth</span>
-        </button>
-        <button class="nav-item" data-view="manifesto" id="nav-manifesto">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
-          </svg>
-          <span>Manifesto</span>
-        </button>
-        <button class="nav-item" data-view="profile" id="nav-profile" style="display:none">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-          </svg>
-          <span id="sidebar-user-name">Profile</span>
-        </button>
-        <button class="nav-item" id="logout-btn" style="display:none; color: var(--error)">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
-          <span>Sign Out</span>
-        </button>
-      </nav>
-
-      <div class="sidebar__footer">
-        <div class="sidebar__disclaimer">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
-          </svg>
-          <span>Non-partisan. Process-focused. Powered by Gemini AI.</span>
+        <div class="mobile-brand">
+          <img src="/assets/logo.png" alt="Civitra Logo" class="logo-img logo-img--sm" />
+          <span>Civitra</span>
         </div>
-      </div>
-    </aside>
+      </header>
 
-    <!-- ── Mobile Header ──────────────────────────────── -->
-    <header class="mobile-header" id="mobile-header">
-      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <div class="mobile-brand">
-        <img src="/assets/logo.png" alt="Civitra Logo" class="logo-img logo-img--sm">
-        <span>Civitra</span>
-      </div>
-    </header>
-
-    <!-- ── Main Content ───────────────────────────────── -->
-    <main class="main" id="main-content">
-      <!-- Auth View -->
-      <section class="view view--active" id="view-auth">
-        <div class="auth">
-          <div class="auth__container glass-card">
-            <div class="auth__header">
-              <img src="/assets/logo.png" alt="Civitra" class="auth__logo">
-              <h2>Welcome to Civitra</h2>
-              <p>Sign in to persist your chat history and voting plans</p>
-            </div>
-
-            <!-- Login Form -->
-            <div id="auth-login" class="auth__form-container">
-              <form id="login-form" class="auth__form">
-                <div class="form-group">
-                  <label for="login-email">Email Address</label>
-                  <input type="email" id="login-email" required placeholder="name@example.com">
-                </div>
-                <div class="form-group">
-                  <label for="login-password">Password</label>
-                  <input type="password" id="login-password" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn btn--primary btn--full">Sign In</button>
-              </form>
-              <div class="auth__links">
-                <a href="#" data-auth-view="forgot">Forgot Password?</a>
-                <span>Don't have an account? <a href="#" data-auth-view="register">Create one</a></span>
+      <!-- ── Main Content ───────────────────────────────── -->
+      <main class="main" id="main-content">
+        <!-- Auth View -->
+        <section class="view view--active" id="view-auth">
+          <div class="auth">
+            <div class="auth__container glass-card">
+              <div class="auth__header">
+                <img src="/assets/logo.png" alt="Civitra" class="auth__logo" />
+                <h2>Welcome to Civitra</h2>
+                <p>Sign in to persist your chat history and voting plans</p>
               </div>
-            </div>
 
-            <!-- Register Form -->
-            <div id="auth-register" class="auth__form-container" style="display:none">
-              <form id="register-form" class="auth__form">
-                <div class="form-group">
-                  <label for="register-name">Full Name</label>
-                  <input type="text" id="register-name" required placeholder="Your Name">
-                </div>
-                <div class="form-group">
-                  <label for="register-email">Email Address</label>
-                  <input type="email" id="register-email" required placeholder="name@example.com">
-                </div>
-                <div class="form-group">
-                  <label for="register-password">Password</label>
-                  <input type="password" id="register-password" required placeholder="••••••••" minlength="6">
-                </div>
-                <div class="form-group">
-                  <label for="register-confirm">Confirm Password</label>
-                  <input type="password" id="register-confirm" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn btn--primary btn--full">Create Account</button>
-              </form>
-              <div class="auth__links">
-                <span>Already have an account? <a href="#" data-auth-view="login">Sign In</a></span>
-              </div>
-            </div>
-
-            <!-- Forgot Password Form -->
-            <div id="auth-forgot" class="auth__form-container" style="display:none">
-              <form id="forgot-form" class="auth__form">
-                <p class="auth__subtext">Enter your email to receive a password reset link.</p>
-                <div class="form-group">
-                  <label for="forgot-email">Email Address</label>
-                  <input type="email" id="forgot-email" required placeholder="name@example.com">
-                </div>
-                <button type="submit" class="btn btn--primary btn--full">Send Reset Link</button>
-              </form>
-              <div class="auth__links">
-                <a href="#" data-auth-view="login">Back to Sign In</a>
-              </div>
-            </div>
-
-            <!-- Reset Password Form -->
-            <div id="auth-reset" class="auth__form-container" style="display:none">
-              <form id="reset-form" class="auth__form">
-                <input type="hidden" id="reset-token">
-                <div class="form-group">
-                  <label for="reset-password">New Password</label>
-                  <input type="password" id="reset-password" required placeholder="••••••••" minlength="6">
-                </div>
-                <div class="form-group">
-                  <label for="reset-confirm">Confirm New Password</label>
-                  <input type="password" id="reset-confirm" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn btn--primary btn--full">Reset Password</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div id="app-authenticated" style="display:none">
-        <!-- Chat View -->
-        <section class="view" id="view-chat">
-        <div class="chat">
-          <div class="chat__messages" id="chat-messages">
-            <!-- Welcome message -->
-            <div class="chat__welcome">
-              <div class="welcome-logo-container">
-                <img src="/assets/logo.png" alt="Civitra" class="welcome-logo">
-              </div>
-              <h2>Namaste! I'm Civitra</h2>
-              <p>Your friendly guide to understanding the Indian election process. Ask me anything about voting, registration, eligibility, or elections!</p>
-              <div class="suggestions" id="suggestions"></div>
-            </div>
-          </div>
-          <div class="chat__input-area">
-            <div class="chat__input-wrapper">
-              <textarea
-                id="chat-input"
-                class="chat__input"
-                placeholder="Ask about elections, voting, registration..."
-                rows="1"
-                aria-label="Type your question"
-              ></textarea>
-              <button class="chat__send-btn" id="chat-send" aria-label="Send message">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                </svg>
-              </button>
-            </div>
-            <p class="chat__disclaimer">Civitra provides educational info only. Always verify with <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener">ECI</a> for official details.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Learn View -->
-      <section class="view" id="view-learn">
-        <div class="learn">
-          <div class="section-header">
-            <h2>Learn About Elections</h2>
-            <p>Explore key topics about the Indian democratic process</p>
-          </div>
-          <div class="learn__grid" id="learn-grid">
-            <!-- Cards injected by learn.js -->
-          </div>
-          <div class="learn__detail glass-card" id="learn-detail" style="display:none">
-            <button class="learn__back-btn" id="learn-back">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-              Back to Topics
-            </button>
-            <div class="learn__detail-content" id="learn-detail-content"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Voting Plan View -->
-      <section class="view" id="view-plan">
-        <div class="plan">
-          <div class="section-header">
-            <h2>My Voting Plan</h2>
-            <p>Answer a few questions to get your personalized voting checklist</p>
-          </div>
-          <!-- Wizard -->
-          <div class="plan__wizard glass-card" id="plan-wizard">
-            <div class="plan__progress">
-              <div class="plan__progress-bar" id="plan-progress-bar"></div>
-            </div>
-            <div class="plan__step" id="plan-step">
-              <!-- Steps injected by voting-plan.js -->
-            </div>
-            <div class="plan__actions">
-              <button class="btn btn--ghost" id="plan-prev" style="display:none">Back</button>
-              <button class="btn btn--primary" id="plan-next">Next</button>
-            </div>
-          </div>
-          <!-- Result -->
-          <div class="plan__result" id="plan-result" style="display:none">
-            <div class="plan__result-content" id="plan-result-content"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Quiz View -->
-      <section class="view" id="view-quiz">
-        <div class="quiz">
-          <div class="section-header">
-            <h2>Election Knowledge Quiz</h2>
-            <p>Test your knowledge about the Indian election process</p>
-          </div>
-          <!-- Quiz Start -->
-          <div class="quiz__start glass-card" id="quiz-start">
-            <div class="quiz__start-icon">🧠</div>
-            <h3>Ready to test your election knowledge?</h3>
-            <p>5 questions about the Indian democratic process. Non-partisan. Educational. Fun!</p>
-            <div class="quiz__topics">
-              <label class="quiz__topic-label">Choose a topic:</label>
-              <select id="quiz-topic" class="quiz__topic-select">
-                <option value="General">General Knowledge</option>
-                <option value="Voter Registration">Voter Registration</option>
-                <option value="Voting Process">Voting Process</option>
-                <option value="EVM and VVPAT">EVM & VVPAT</option>
-                <option value="Special Provisions">Special Provisions</option>
-                <option value="Election Commission">Election Commission</option>
-              </select>
-            </div>
-            <button class="btn btn--primary btn--lg" id="quiz-begin">Start Quiz</button>
-          </div>
-          <!-- Quiz Active -->
-          <div class="quiz__active" id="quiz-active" style="display:none">
-            <div class="quiz__header">
-              <span class="quiz__counter" id="quiz-counter">Question 1 of 5</span>
-              <span class="quiz__score" id="quiz-score">Score: 0</span>
-            </div>
-            <div class="quiz__question glass-card" id="quiz-question"></div>
-            <div class="quiz__options" id="quiz-options"></div>
-            <div class="quiz__explanation glass-card" id="quiz-explanation" style="display:none"></div>
-            <button class="btn btn--primary" id="quiz-next-q" style="display:none">Next Question</button>
-          </div>
-          <!-- Quiz Results -->
-          <div class="quiz__results glass-card" id="quiz-results" style="display:none">
-            <div class="quiz__results-content" id="quiz-results-content"></div>
-            <button class="btn btn--primary" id="quiz-retry">Play Again</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Booth Finder View -->
-      <section class="view" id="view-booth">
-        <div class="booth">
-          <div class="section-header">
-            <h2>Find Your Polling Booth</h2>
-            <p>GPS-based booth discovery with traffic-aware timing</p>
-          </div>
-          <div class="booth__container">
-            <div class="booth__map-card glass-card">
-              <div class="booth__map" id="booth-map">
-                <div class="booth__map-placeholder" id="booth-map-placeholder">
-                  <div class="booth__map-icon">📍</div>
-                  <h3>Locate Nearby Polling Booths</h3>
-                  <p>Allow location access to find booths near you</p>
-                  <button class="btn btn--primary" id="booth-locate-btn">Enable Location</button>
-                  <p class="booth__privacy-note">🔒 Privacy-first: Your location is used only in-session and never stored.</p>
-                </div>
-              </div>
-            </div>
-            <div class="booth__info" id="booth-info">
-              <div class="booth__info-card glass-card" id="booth-results">
-                <h3>🗳️ Nearby Booths</h3>
-                <p class="booth__hint">Enable location to discover polling stations in your area.</p>
-              </div>
-              <div class="booth__info-card glass-card" id="booth-timing">
-                <h3>🕐 Best Time to Vote</h3>
-                <p class="booth__hint">Traffic-aware suggestions will appear after booth selection.</p>
-              </div>
-              <div class="booth__info-card glass-card" id="booth-eci">
-                <h3>✅ Verify with ECI</h3>
-                <p>Confirm your booth assignment on the official portal:</p>
-                <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener" class="btn btn--ghost booth__eci-btn">Open ECI Voter Portal →</a>
-                <a href="https://electoralsearch.eci.gov.in/" target="_blank" rel="noopener" class="btn btn--ghost booth__eci-btn">Electoral Search →</a>
-                <p class="booth__privacy-note">🔒 Civitra does NOT access or store any voter roll data.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Manifesto Compare View -->
-      <section class="view" id="view-manifesto">
-        <div class="manifesto">
-          <div class="section-header">
-            <h2>Manifesto Comparison</h2>
-            <p>AI-powered, non-partisan comparison of party positions</p>
-          </div>
-          <!-- Party Selection -->
-          <div class="manifesto__selector glass-card" id="manifesto-selector">
-            <h3>Select Parties to Compare</h3>
-            <p class="manifesto__sub">Choose 2 or more parties for a side-by-side comparison</p>
-            <div class="manifesto__parties" id="manifesto-parties">
-              <!-- Injected by manifesto.js -->
-            </div>
-            <h3 style="margin-top:24px">Select Issues</h3>
-            <p class="manifesto__sub">Pick the topics you care about most</p>
-            <div class="manifesto__issues" id="manifesto-issues">
-              <!-- Injected by manifesto.js -->
-            </div>
-            <button class="btn btn--primary btn--lg" id="manifesto-compare-btn" disabled>Compare Manifestos</button>
-          </div>
-          <!-- Results -->
-          <div class="manifesto__results" id="manifesto-results" style="display:none">
-            <button class="learn__back-btn" id="manifesto-back">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-              Change Selection
-            </button>
-            <div id="manifesto-results-content"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Profile View -->
-      <section class="view" id="view-profile">
-        <div class="profile">
-          <div class="section-header">
-            <h2>Your Profile</h2>
-            <p>Manage your account and viewing history</p>
-          </div>
-          
-          <div class="profile__container">
-            <!-- Profile Info -->
-            <div class="profile__main">
-              <div class="glass-card profile__card">
-                <div class="profile__header">
-                  <div class="profile__avatar">👤</div>
-                  <div>
-                    <h3 id="profile-user-name">User Name</h3>
-                    <p id="profile-user-email">email@example.com</p>
-                    <span id="profile-joined" class="profile__joined">Member since ...</span>
+              <!-- Login Form -->
+              <div id="auth-login" class="auth__form-container">
+                <form id="login-form" class="auth__form">
+                  <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" required placeholder="name@example.com" />
                   </div>
-                </div>
-                
-                <form id="profile-form" class="profile__form">
-                  <div class="profile__form-grid">
-                    <div class="form-group">
-                      <label for="profile-name">Full Name</label>
-                      <input type="text" id="profile-name">
-                    </div>
-                    <div class="form-group">
-                      <label for="profile-email">Email (Read-only)</label>
-                      <input type="email" id="profile-email" readonly disabled>
-                    </div>
-                    <div class="form-group">
-                      <label for="profile-epic">Election Card Number (EPIC)</label>
-                      <input type="text" id="profile-epic" placeholder="ABC1234567">
-                    </div>
-                    <div class="form-group">
-                      <label for="profile-constituency">Your Constituency</label>
-                      <input type="text" id="profile-constituency">
-                    </div>
-                    <div class="form-group">
-                      <label for="profile-state">State</label>
-                      <input type="text" id="profile-state">
-                    </div>
+                  <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required placeholder="••••••••" />
                   </div>
-                  <button type="submit" class="btn btn--primary">Save Changes</button>
+                  <button type="submit" class="btn btn--primary btn--full">Sign In</button>
                 </form>
+                <div class="auth__links">
+                  <a href="#" data-auth-view="forgot">Forgot Password?</a>
+                  <span
+                    >Don't have an account?
+                    <a href="#" data-auth-view="register">Create one</a></span
+                  >
+                </div>
               </div>
 
-              <div class="glass-card profile__card">
-                <h3>🗳️ Election Card Verification</h3>
-                <p class="profile__subtext">Upload your election card to fetch relative data (Demo purposes).</p>
-                <form id="election-card-form" class="profile__upload-form">
-                  <div class="profile__upload-area">
-                    <input type="file" id="election-card-file" accept=".jpg,.jpeg,.png,.webp,.pdf">
-                    <div id="card-preview" class="profile__preview">
-                      <div class="profile__preview-placeholder">No file selected</div>
-                    </div>
+              <!-- Register Form -->
+              <div id="auth-register" class="auth__form-container" style="display: none">
+                <form id="register-form" class="auth__form">
+                  <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" required placeholder="Your Name" />
                   </div>
-                  <button type="submit" class="btn btn--ghost">Upload</button>
+                  <div class="form-group">
+                    <label for="register-email">Email Address</label>
+                    <input
+                      type="email"
+                      id="register-email"
+                      required
+                      placeholder="name@example.com"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input
+                      type="password"
+                      id="register-password"
+                      required
+                      placeholder="••••••••"
+                      minlength="6"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="register-confirm">Confirm Password</label>
+                    <input type="password" id="register-confirm" required placeholder="••••••••" />
+                  </div>
+                  <button type="submit" class="btn btn--primary btn--full">Create Account</button>
+                </form>
+                <div class="auth__links">
+                  <span
+                    >Already have an account? <a href="#" data-auth-view="login">Sign In</a></span
+                  >
+                </div>
+              </div>
+
+              <!-- Forgot Password Form -->
+              <div id="auth-forgot" class="auth__form-container" style="display: none">
+                <form id="forgot-form" class="auth__form">
+                  <p class="auth__subtext">Enter your email to receive a password reset link.</p>
+                  <div class="form-group">
+                    <label for="forgot-email">Email Address</label>
+                    <input type="email" id="forgot-email" required placeholder="name@example.com" />
+                  </div>
+                  <button type="submit" class="btn btn--primary btn--full">Send Reset Link</button>
+                </form>
+                <div class="auth__links">
+                  <a href="#" data-auth-view="login">Back to Sign In</a>
+                </div>
+              </div>
+
+              <!-- Reset Password Form -->
+              <div id="auth-reset" class="auth__form-container" style="display: none">
+                <form id="reset-form" class="auth__form">
+                  <input type="hidden" id="reset-token" />
+                  <div class="form-group">
+                    <label for="reset-password">New Password</label>
+                    <input
+                      type="password"
+                      id="reset-password"
+                      required
+                      placeholder="••••••••"
+                      minlength="6"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="reset-confirm">Confirm New Password</label>
+                    <input type="password" id="reset-confirm" required placeholder="••••••••" />
+                  </div>
+                  <button type="submit" class="btn btn--primary btn--full">Reset Password</button>
                 </form>
               </div>
             </div>
+          </div>
+        </section>
 
-            <!-- History Sidebar -->
-            <div class="profile__side">
-              <div class="glass-card profile__card">
-                <h3>📜 Chat Sessions</h3>
-                <div id="profile-chat-sessions" class="profile__history-list">
-                  <!-- Injected by profile.js -->
+        <div id="app-authenticated" style="display: none">
+          <nav class="journey" id="election-journey" aria-label="Seven-stage election journey">
+            <p class="journey__label">Guided journey</p>
+            <ol class="journey__steps">
+              <li class="journey__step journey__step--current">
+                <button
+                  type="button"
+                  class="journey__btn"
+                  data-journey-view="chat"
+                  aria-current="step"
+                >
+                  1. Eligibility
+                </button>
+              </li>
+              <li class="journey__step">
+                <button type="button" class="journey__btn" data-journey-view="learn">
+                  2. Registration
+                </button>
+              </li>
+              <li class="journey__step">
+                <button type="button" class="journey__btn" data-journey-view="manifesto">
+                  3. Candidates
+                </button>
+              </li>
+              <li class="journey__step">
+                <button type="button" class="journey__btn" data-journey-view="learn">
+                  4. Voting
+                </button>
+              </li>
+              <li class="journey__step">
+                <button type="button" class="journey__btn" data-journey-view="plan">
+                  5. Timeline
+                </button>
+              </li>
+              <li class="journey__step">
+                <button type="button" class="journey__btn" data-journey-view="booth">
+                  6. Polling day
+                </button>
+              </li>
+              <li class="journey__step">
+                <button type="button" class="journey__btn" data-journey-view="quiz">
+                  7. Post-vote
+                </button>
+              </li>
+            </ol>
+          </nav>
+          <!-- Chat View -->
+          <section class="view" id="view-chat">
+            <div class="chat">
+              <div
+                class="chat__messages"
+                id="chat-messages"
+                role="log"
+                aria-live="polite"
+                aria-relevant="additions text"
+              >
+                <!-- Welcome message -->
+                <div class="chat__welcome">
+                  <div class="welcome-logo-container">
+                    <img src="/assets/logo.png" alt="Civitra" class="welcome-logo" />
+                  </div>
+                  <h2>Namaste! I'm Civitra</h2>
+                  <p>
+                    Your friendly guide to understanding the Indian election process. Ask me
+                    anything about voting, registration, eligibility, or elections!
+                  </p>
+                  <div class="suggestions" id="suggestions"></div>
                 </div>
               </div>
-              <div class="glass-card profile__card">
-                <h3>📋 Saved Voting Plans</h3>
-                <div id="profile-voting-plans" class="profile__history-list">
-                  <!-- Injected by profile.js -->
+              <div class="chat__input-area">
+                <div class="chat__input-wrapper">
+                  <textarea
+                    id="chat-input"
+                    class="chat__input"
+                    placeholder="Ask about elections, voting, registration..."
+                    rows="1"
+                    aria-label="Type your question"
+                  ></textarea>
+                  <button class="chat__send-btn" id="chat-send" aria-label="Send message">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <line x1="22" y1="2" x2="11" y2="13" />
+                      <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                  </button>
+                </div>
+                <p class="chat__disclaimer">
+                  Civitra provides educational info only. Always verify with
+                  <a href="https://voters.eci.gov.in/" target="_blank" rel="noopener">ECI</a> for
+                  official details.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Learn View -->
+          <section class="view" id="view-learn">
+            <div class="learn">
+              <div class="section-header">
+                <h2>Learn About Elections</h2>
+                <p>Explore key topics about the Indian democratic process</p>
+              </div>
+              <div class="learn__grid" id="learn-grid">
+                <!-- Cards injected by learn.js -->
+              </div>
+              <div class="learn__detail glass-card" id="learn-detail" style="display: none">
+                <button class="learn__back-btn" id="learn-back">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="19" y1="12" x2="5" y2="12" />
+                    <polyline points="12 19 5 12 12 5" />
+                  </svg>
+                  Back to Topics
+                </button>
+                <div class="learn__detail-content" id="learn-detail-content"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Voting Plan View -->
+          <section class="view" id="view-plan">
+            <div class="plan">
+              <div class="section-header">
+                <h2>My Voting Plan</h2>
+                <p>Answer a few questions to get your personalized voting checklist</p>
+              </div>
+              <!-- Wizard -->
+              <div class="plan__wizard glass-card" id="plan-wizard">
+                <div class="plan__progress">
+                  <div class="plan__progress-bar" id="plan-progress-bar"></div>
+                </div>
+                <div class="plan__step" id="plan-step">
+                  <!-- Steps injected by voting-plan.js -->
+                </div>
+                <div class="plan__actions">
+                  <button class="btn btn--ghost" id="plan-prev" style="display: none">Back</button>
+                  <button class="btn btn--primary" id="plan-next">Next</button>
+                </div>
+              </div>
+              <!-- Result -->
+              <div class="plan__result" id="plan-result" style="display: none">
+                <div class="plan__result-content" id="plan-result-content"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Quiz View -->
+          <section class="view" id="view-quiz">
+            <div class="quiz">
+              <div class="section-header">
+                <h2>Election Knowledge Quiz</h2>
+                <p>Test your knowledge about the Indian election process</p>
+              </div>
+              <!-- Quiz Start -->
+              <div class="quiz__start glass-card" id="quiz-start">
+                <div class="quiz__start-icon">🧠</div>
+                <h3>Ready to test your election knowledge?</h3>
+                <p>
+                  5 questions about the Indian democratic process. Non-partisan. Educational. Fun!
+                </p>
+                <div class="quiz__topics">
+                  <label class="quiz__topic-label">Choose a topic:</label>
+                  <select id="quiz-topic" class="quiz__topic-select">
+                    <option value="General">General Knowledge</option>
+                    <option value="Voter Registration">Voter Registration</option>
+                    <option value="Voting Process">Voting Process</option>
+                    <option value="EVM and VVPAT">EVM & VVPAT</option>
+                    <option value="Special Provisions">Special Provisions</option>
+                    <option value="Election Commission">Election Commission</option>
+                  </select>
+                </div>
+                <button class="btn btn--primary btn--lg" id="quiz-begin">Start Quiz</button>
+              </div>
+              <!-- Quiz Active -->
+              <div class="quiz__active" id="quiz-active" style="display: none">
+                <div class="quiz__header">
+                  <span class="quiz__counter" id="quiz-counter">Question 1 of 5</span>
+                  <span class="quiz__score" id="quiz-score">Score: 0</span>
+                </div>
+                <div class="quiz__question glass-card" id="quiz-question"></div>
+                <div class="quiz__options" id="quiz-options"></div>
+                <div
+                  class="quiz__explanation glass-card"
+                  id="quiz-explanation"
+                  style="display: none"
+                ></div>
+                <button class="btn btn--primary" id="quiz-next-q" style="display: none">
+                  Next Question
+                </button>
+              </div>
+              <!-- Quiz Results -->
+              <div class="quiz__results glass-card" id="quiz-results" style="display: none">
+                <div class="quiz__results-content" id="quiz-results-content"></div>
+                <button class="btn btn--primary" id="quiz-retry">Play Again</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Booth Finder View -->
+          <section class="view" id="view-booth">
+            <div class="booth">
+              <div class="section-header">
+                <h2>Find Your Polling Booth</h2>
+                <p>GPS-based booth discovery with traffic-aware timing</p>
+              </div>
+              <div class="booth__container">
+                <div class="booth__map-card glass-card">
+                  <div class="booth__map" id="booth-map">
+                    <div class="booth__map-placeholder" id="booth-map-placeholder">
+                      <div class="booth__map-icon">📍</div>
+                      <h3>Locate Nearby Polling Booths</h3>
+                      <p>Allow location access to find booths near you</p>
+                      <button class="btn btn--primary" id="booth-locate-btn">
+                        Enable Location
+                      </button>
+                      <p class="booth__privacy-note">
+                        🔒 Privacy-first: Your location is used only in-session and never stored.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="booth__info" id="booth-info">
+                  <div class="booth__info-card glass-card" id="booth-results">
+                    <h3>🗳️ Nearby Booths</h3>
+                    <p class="booth__hint">
+                      Enable location to discover polling stations in your area.
+                    </p>
+                  </div>
+                  <div class="booth__info-card glass-card" id="booth-timing">
+                    <h3>🕐 Best Time to Vote</h3>
+                    <p class="booth__hint">
+                      Traffic-aware suggestions will appear after booth selection.
+                    </p>
+                  </div>
+                  <div class="booth__info-card glass-card" id="booth-eci">
+                    <h3>✅ Verify with ECI</h3>
+                    <p>Confirm your booth assignment on the official portal:</p>
+                    <a
+                      href="https://voters.eci.gov.in/"
+                      target="_blank"
+                      rel="noopener"
+                      class="btn btn--ghost booth__eci-btn"
+                      >Open ECI Voter Portal →</a
+                    >
+                    <a
+                      href="https://electoralsearch.eci.gov.in/"
+                      target="_blank"
+                      rel="noopener"
+                      class="btn btn--ghost booth__eci-btn"
+                      >Electoral Search →</a
+                    >
+                    <p class="booth__privacy-note">
+                      🔒 Civitra does NOT access or store any voter roll data.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
+
+          <!-- Manifesto Compare View -->
+          <section class="view" id="view-manifesto">
+            <div class="manifesto">
+              <div class="section-header">
+                <h2>Manifesto Comparison</h2>
+                <p>AI-powered, non-partisan comparison of party positions</p>
+              </div>
+              <!-- Party Selection -->
+              <div class="manifesto__selector glass-card" id="manifesto-selector">
+                <h3>Select Parties to Compare</h3>
+                <p class="manifesto__sub">Choose 2 or more parties for a side-by-side comparison</p>
+                <div class="manifesto__parties" id="manifesto-parties">
+                  <!-- Injected by manifesto.js -->
+                </div>
+                <h3 style="margin-top: 24px">Select Issues</h3>
+                <p class="manifesto__sub">Pick the topics you care about most</p>
+                <div class="manifesto__issues" id="manifesto-issues">
+                  <!-- Injected by manifesto.js -->
+                </div>
+                <button class="btn btn--primary btn--lg" id="manifesto-compare-btn" disabled>
+                  Compare Manifestos
+                </button>
+              </div>
+              <!-- Results -->
+              <div class="manifesto__results" id="manifesto-results" style="display: none">
+                <button class="learn__back-btn" id="manifesto-back">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="19" y1="12" x2="5" y2="12" />
+                    <polyline points="12 19 5 12 12 5" />
+                  </svg>
+                  Change Selection
+                </button>
+                <div id="manifesto-results-content"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Profile View -->
+          <section class="view" id="view-profile">
+            <div class="profile">
+              <div class="section-header">
+                <h2>Your Profile</h2>
+                <p>Manage your account and viewing history</p>
+              </div>
+
+              <div class="profile__container">
+                <!-- Profile Info -->
+                <div class="profile__main">
+                  <div class="glass-card profile__card">
+                    <div class="profile__header">
+                      <div class="profile__avatar">👤</div>
+                      <div>
+                        <h3 id="profile-user-name">User Name</h3>
+                        <p id="profile-user-email">email@example.com</p>
+                        <span id="profile-joined" class="profile__joined">Member since ...</span>
+                      </div>
+                    </div>
+
+                    <form id="profile-form" class="profile__form">
+                      <div class="profile__form-grid">
+                        <div class="form-group">
+                          <label for="profile-name">Full Name</label>
+                          <input type="text" id="profile-name" />
+                        </div>
+                        <div class="form-group">
+                          <label for="profile-email">Email (Read-only)</label>
+                          <input type="email" id="profile-email" readonly disabled />
+                        </div>
+                        <div class="form-group">
+                          <label for="profile-epic">Election Card Number (EPIC)</label>
+                          <input type="text" id="profile-epic" placeholder="ABC1234567" />
+                        </div>
+                        <div class="form-group">
+                          <label for="profile-constituency">Your Constituency</label>
+                          <input type="text" id="profile-constituency" />
+                        </div>
+                        <div class="form-group">
+                          <label for="profile-state">State</label>
+                          <input type="text" id="profile-state" />
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn--primary">Save Changes</button>
+                    </form>
+                  </div>
+
+                  <div class="glass-card profile__card">
+                    <h3>🗳️ Election Card Verification</h3>
+                    <p class="profile__subtext">
+                      Upload your election card to fetch relative data (Demo purposes).
+                    </p>
+                    <form id="election-card-form" class="profile__upload-form">
+                      <div class="profile__upload-area">
+                        <input
+                          type="file"
+                          id="election-card-file"
+                          accept=".jpg,.jpeg,.png,.webp,.pdf"
+                        />
+                        <div id="card-preview" class="profile__preview">
+                          <div class="profile__preview-placeholder">No file selected</div>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn--ghost">Upload</button>
+                    </form>
+                  </div>
+                </div>
+
+                <!-- History Sidebar -->
+                <div class="profile__side">
+                  <div class="glass-card profile__card">
+                    <h3>📜 Chat Sessions</h3>
+                    <div id="profile-chat-sessions" class="profile__history-list">
+                      <!-- Injected by profile.js -->
+                    </div>
+                  </div>
+                  <div class="glass-card profile__card">
+                    <h3>📋 Saved Voting Plans</h3>
+                    <div id="profile-voting-plans" class="profile__history-list">
+                      <!-- Injected by profile.js -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
-      </div>
-    </main>
-  </div>
+      </main>
+    </div>
 
-  <!-- ── Overlay for mobile sidebar ───────────────────── -->
-  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <!-- ── Overlay for mobile sidebar ───────────────────── -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-  <!-- ── Toast Container ──────────────────────────────── -->
-  <div class="toast-container" id="toast-container"></div>
+    <!-- ── Toast Container ──────────────────────────────── -->
+    <div class="toast-container" id="toast-container"></div>
 
-  <!-- ── Scripts ──────────────────────────────────────── -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script type="module" src="/js/app.js"></script>
-</body>
+    <!-- ── Scripts ──────────────────────────────────────── -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module" src="/js/app.js"></script>
+  </body>
 </html>

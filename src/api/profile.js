@@ -29,13 +29,13 @@ router.get("/", async (req, res) => {
 // ── Update profile ─────────────────────────────────────────
 router.put("/", async (req, res) => {
   const { name, election_card_number, constituency, state } = req.body;
-  
+
   const updateData = {
     election_card_number: election_card_number || null,
     constituency: constituency || null,
-    state: state || null
+    state: state || null,
   };
-  
+
   if (name?.trim()) updateData.name = name.trim();
 
   await firestoreService.updateProfile(req.userId, updateData);
@@ -52,7 +52,7 @@ router.post("/election-card", upload.single("electionCard"), async (req, res) =>
     const file = bucket.file(filename);
 
     await file.save(req.file.buffer, {
-      metadata: { contentType: req.file.mimetype }
+      metadata: { contentType: req.file.mimetype },
     });
 
     // Make public and get URL

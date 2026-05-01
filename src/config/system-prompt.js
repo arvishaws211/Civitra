@@ -1,6 +1,6 @@
 /**
  * Civitra System Prompt — Election Process Education Assistant
- * 
+ *
  * Carefully engineered to produce non-partisan, accurate, and encouraging
  * responses focused exclusively on the Indian democratic process.
  */

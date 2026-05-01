@@ -9,7 +9,8 @@ const router = Router();
 
 // ── Generate personalized voting plan ──────────────────────
 router.post("/", optionalAuth, async (req, res) => {
-  const { age, state, isRegistered, hasVoterId, votingPreference, isFirstTime, isNRI, hasPwD } = req.body;
+  const { age, state, isRegistered, hasVoterId, votingPreference, isFirstTime, isNRI, hasPwD } =
+    req.body;
 
   if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === "your_gemini_api_key_here") {
     return res.status(500).json({ error: "Gemini API key not configured." });
@@ -71,16 +72,28 @@ Focus on Indian election process (ECI).`;
     });
 
     let text = response.text || "";
-    
+
     // Strip markdown code fences if present
-    text = text.replace(/```json\s*/gi, "").replace(/```\s*/g, "").trim();
+    text = text
+      .replace(/```json\s*/gi, "")
+      .replace(/```\s*/g, "")
+      .trim();
 
     try {
       const plan = JSON.parse(text);
 
       // Persist for logged-in users
       if (req.userId) {
-        const answersData = { age, state, isRegistered, hasVoterId, votingPreference, isFirstTime, isNRI, hasPwD };
+        const answersData = {
+          age,
+          state,
+          isRegistered,
+          hasVoterId,
+          votingPreference,
+          isFirstTime,
+          isNRI,
+          hasPwD,
+        };
         await firestoreService.saveVotingPlan(req.userId, plan, answersData);
       }
 
