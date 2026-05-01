@@ -14,12 +14,10 @@
   "include": [
     "src/**/*.js",
     "server.js",
-    "tests/unit/**/*.js",
-    "tests/integration/**/*.js",
     "vitest.config.js",
     "playwright.config.js",
     "eslint.config.js",
     "types/**/*.d.ts"
   ],
-  "exclude": ["node_modules", "tests/e2e", "coverage"]
+  "exclude": ["node_modules", "tests", "coverage"]
 }

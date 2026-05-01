@@ -47,7 +47,7 @@ export function cosineSimilarity(a, b) {
  */
 function keywordFallback(query, limit) {
   const result = lookupElectionFaq(query, limit);
-  return { ...result, method: "keyword_fallback" };
+  return { ...result, method: /** @type {const} */ ("keyword_fallback") };
 }
 
 /**
@@ -58,8 +58,8 @@ function keywordFallback(query, limit) {
  * - Pre-computed embeddings cache (`faq-embeddings.json`) is missing
  * - The embedding API call fails for any reason
  *
- * @param {string} query  — natural-language user question
- * @param {number} [limit=4] — max results to return
+ * @param {string} query - natural-language user question
+ * @param {number} [limit=4] - max results to return
  * @returns {Promise<{
  *   matches: { id: string; q: string; a: string; tags: string[] }[],
  *   method: "semantic" | "keyword_fallback",

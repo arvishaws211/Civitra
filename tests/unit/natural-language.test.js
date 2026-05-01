@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 describe("analyzeQueryEntities", () => {
-  let analyzeQueryEntities;
+  let analyzeQueryEntities; // eslint-disable-line no-unused-vars
 
   beforeEach(async () => {
     vi.resetModules();

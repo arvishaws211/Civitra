@@ -1,22 +1,42 @@
 import { describe, it, expect, vi } from "vitest";
 import request from "supertest";
-import { createApp } from "../../src/create-app.js";
+
+vi.mock("../../src/config/firebase.js", () => ({
+  db: {},
+  bucket: { file: vi.fn().mockReturnValue({ save: vi.fn(), makePublic: vi.fn() }) },
+  auth: {},
+}));
 
 vi.mock("../../src/services/translation.js", () => ({
   translateText: vi.fn(),
 }));
 
 vi.mock("../../src/db/firestore-service.js", () => ({
-  firestoreService: {},
+  firestoreService: {
+    getChatHistory: vi.fn().mockResolvedValue([]),
+    saveChatMessage: vi.fn().mockResolvedValue(undefined),
+    findUserByEmail: vi.fn().mockResolvedValue(null),
+    findUserById: vi.fn().mockResolvedValue(null),
+    createUser: vi.fn().mockResolvedValue({ lastInsertRowid: "1" }),
+    createResetToken: vi.fn().mockResolvedValue(undefined),
+    findResetToken: vi.fn().mockResolvedValue(null),
+    markTokenUsed: vi.fn().mockResolvedValue(undefined),
+    updateProfile: vi.fn().mockResolvedValue(undefined),
+  },
 }));
 
 vi.mock("../../src/middleware/auth.js", () => ({
   optionalAuth: (req, _res, next) => next(),
+  requireAuth: (req, _res, next) => next(),
+  generateToken: vi.fn().mockReturnValue("mock-token"),
+  verifyRecaptcha: vi.fn().mockResolvedValue(true),
+  verifyToken: vi.fn().mockReturnValue({ userId: "test-user" }),
 }));
 
 import { translateText } from "../../src/services/translation.js";
 
-const app = createApp({ staticRoot: undefined });
+const { createApp } = await import("../../src/create-app.js");
+const app = createApp();
 
 describe("POST /api/translate", () => {
   it("returns 400 when target is missing", async () => {
