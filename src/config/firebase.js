@@ -15,10 +15,18 @@ try {
     storageBucket: `${serviceAccount.project_id}.firebasestorage.app`
   });
 
-  console.log("✅ Firebase Admin initialized");
+  console.log("✅ Firebase Admin initialized with service account file");
 } catch (error) {
-  console.error("⚠️ Firebase Admin initialization failed. Ensure firebase-service-account.json exists in root.");
-  // Fallback or exit if critical
+  console.log("⚠️ Service account file not found, falling back to Application Default Credentials.");
+  
+  const projectId = process.env.GOOGLE_CLOUD_PROJECT || process.env.GCLOUD_PROJECT;
+  
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    ...(projectId && { storageBucket: `${projectId}.firebasestorage.app` })
+  });
+  
+  console.log("✅ Firebase Admin initialized using Application Default Credentials");
 }
 
 export const db = admin.firestore();

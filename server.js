@@ -52,8 +52,8 @@ app.get("*", (req, res) => {
 });
 
 // ── Start ──────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`\n  🗳️  Civitra is running at http://localhost:${PORT}\n`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`\n  🗳️  Civitra is running at http://0.0.0.0:${PORT}\n`);
   if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === "your_gemini_api_key_here") {
     console.log("  ⚠️  No GEMINI_API_KEY set. Copy .env.example to .env and add your key.\n");
   }
