@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { stmts } from "../db/database.js";
+import { firestoreService } from "../db/firestore-service.js";
 import { generateToken, verifyRecaptcha, requireAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -26,13 +26,17 @@ router.post("/register", async (req, res) => {
 
   try {
     // Check existing user
-    const existing = stmts.findByEmail.get(email.toLowerCase().trim());
+    const existing = await firestoreService.findUserByEmail(email.toLowerCase().trim());
     if (existing) {
       return res.status(409).json({ error: "An account with this email already exists." });
     }
 
     const hash = await bcrypt.hash(password, 12);
-    const result = stmts.createUser.run(name.trim(), email.toLowerCase().trim(), hash);
+    const result = await firestoreService.createUser({
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      password: hash
+    });
     const token = generateToken(result.lastInsertRowid);
 
     res.status(201).json({
@@ -60,7 +64,7 @@ router.post("/login", async (req, res) => {
   }
 
   try {
-    const user = stmts.findByEmail.get(email.toLowerCase().trim());
+    const user = await firestoreService.findUserByEmail(email.toLowerCase().trim());
     if (!user) {
       return res.status(401).json({ error: "Invalid email or password." });
     }
@@ -95,7 +99,7 @@ router.post("/forgot-password", async (req, res) => {
   }
 
   try {
-    const user = stmts.findByEmail.get(email.toLowerCase().trim());
+    const user = await firestoreService.findUserByEmail(email.toLowerCase().trim());
 
     // Always respond success (don't reveal if email exists)
     if (!user) {
@@ -104,7 +108,7 @@ router.post("/forgot-password", async (req, res) => {
 
     const token = crypto.randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour
-    stmts.createResetToken.run(user.id, token, expiresAt);
+    await firestoreService.createResetToken(user.id, token, expiresAt);
 
     // In production, send email with token. For demo, return it.
     res.json({
@@ -131,14 +135,14 @@ router.post("/reset-password", async (req, res) => {
   }
 
   try {
-    const resetRecord = stmts.findResetToken.get(token);
+    const resetRecord = await firestoreService.findResetToken(token);
     if (!resetRecord) {
       return res.status(400).json({ error: "Invalid or expired reset token." });
     }
 
     const hash = await bcrypt.hash(password, 12);
-    stmts.updatePassword.run(hash, resetRecord.user_id);
-    stmts.markTokenUsed.run(token);
+    await firestoreService.updateProfile(resetRecord.user_id, { password: hash });
+    await firestoreService.markTokenUsed(token);
 
     res.json({ message: "Password reset successfully. You can now log in." });
   } catch (error) {
@@ -148,8 +152,8 @@ router.post("/reset-password", async (req, res) => {
 });
 
 // ── Get current user ───────────────────────────────────────
-router.get("/me", requireAuth, (req, res) => {
-  const user = stmts.findById.get(req.userId);
+router.get("/me", requireAuth, async (req, res) => {
+  const user = await firestoreService.findUserById(req.userId);
   if (!user) return res.status(404).json({ error: "User not found." });
   res.json({ user });
 });

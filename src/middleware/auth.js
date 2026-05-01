@@ -50,8 +50,10 @@ export async function verifyRecaptcha(token) {
       body: `secret=${secret}&response=${token}`,
     });
     const data = await res.json();
+    console.log("reCAPTCHA response:", data);
     return data.success && data.score >= 0.5;
-  } catch {
+  } catch (err) {
+    console.error("reCAPTCHA fetch error:", err);
     return false;
   }
 }

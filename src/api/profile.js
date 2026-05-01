@@ -1,28 +1,12 @@
 import { Router } from "express";
 import multer from "multer";
-import { join, dirname, extname } from "path";
-import { fileURLToPath } from "url";
-import { mkdirSync } from "fs";
-import { stmts } from "../db/database.js";
+import { extname } from "path";
+import { firestoreService } from "../db/firestore-service.js";
 import { requireAuth } from "../middleware/auth.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// ── Upload config ──────────────────────────────────────────
-const UPLOAD_DIR = join(__dirname, "../../public/uploads");
-mkdirSync(UPLOAD_DIR, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOAD_DIR),
-  filename: (req, file, cb) => {
-    const unique = `${req.userId}_${Date.now()}${extname(file.originalname)}`;
-    cb(null, unique);
-  },
-});
+import { bucket } from "../config/firebase.js";
 
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
   fileFilter: (req, file, cb) => {
     const allowed = [".jpg", ".jpeg", ".png", ".webp", ".pdf"];
@@ -33,74 +17,72 @@ const upload = multer({
 });
 
 const router = Router();
-
-// All profile routes require auth
 router.use(requireAuth);
 
 // ── Get profile ────────────────────────────────────────────
-router.get("/", (req, res) => {
-  const user = stmts.findById.get(req.userId);
+router.get("/", async (req, res) => {
+  const user = await firestoreService.findUserById(req.userId);
   if (!user) return res.status(404).json({ error: "User not found." });
   res.json({ user });
 });
 
 // ── Update profile ─────────────────────────────────────────
-router.put("/", (req, res) => {
+router.put("/", async (req, res) => {
   const { name, election_card_number, constituency, state } = req.body;
+  
+  const updateData = {
+    election_card_number: election_card_number || null,
+    constituency: constituency || null,
+    state: state || null
+  };
+  
+  if (name?.trim()) updateData.name = name.trim();
 
-  if (name?.trim()) {
-    stmts.updateName.run(name.trim(), req.userId);
-  }
-
-  stmts.updateProfile.run(
-    election_card_number || null,
-    null, // Image updated separately
-    constituency || null,
-    state || null,
-    req.userId
-  );
-
-  const user = stmts.findById.get(req.userId);
+  await firestoreService.updateProfile(req.userId, updateData);
+  const user = await firestoreService.findUserById(req.userId);
   res.json({ user, message: "Profile updated." });
 });
 
-// ── Upload election card ───────────────────────────────────
-router.post("/election-card", upload.single("electionCard"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "No file uploaded." });
+// ── Upload election card to Firebase Storage ──────────────
+router.post("/election-card", upload.single("electionCard"), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "No file uploaded." });
+
+  try {
+    const filename = `election-cards/${req.userId}_${Date.now()}${extname(req.file.originalname)}`;
+    const file = bucket.file(filename);
+
+    await file.save(req.file.buffer, {
+      metadata: { contentType: req.file.mimetype }
+    });
+
+    // Make public and get URL
+    await file.makePublic();
+    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${filename}`;
+
+    await firestoreService.updateProfile(req.userId, { election_card_image: publicUrl });
+    res.json({ imagePath: publicUrl, message: "Election card uploaded to cloud successfully." });
+  } catch (error) {
+    console.error("Upload error:", error);
+    res.status(500).json({ error: "Failed to upload to cloud storage." });
   }
-
-  const imagePath = `/uploads/${req.file.filename}`;
-
-  // Update user's election card image
-  const user = stmts.findById.get(req.userId);
-  stmts.updateProfile.run(
-    user.election_card_number,
-    imagePath,
-    user.constituency,
-    user.state,
-    req.userId
-  );
-
-  res.json({ imagePath, message: "Election card uploaded successfully." });
 });
 
 // ── Get chat sessions ──────────────────────────────────────
-router.get("/chat-sessions", (req, res) => {
-  const sessions = stmts.getSessions.all(req.userId);
+router.get("/chat-sessions", async (req, res) => {
+  const sessions = await firestoreService.getChatSessions(req.userId);
   res.json({ sessions });
 });
 
 // ── Get chat history for a session ─────────────────────────
-router.get("/chat-history/:sessionId", (req, res) => {
-  const history = stmts.getHistory.all(req.userId, req.params.sessionId);
+router.get("/chat-history/:sessionId", async (req, res) => {
+  const history = await firestoreService.getChatHistory(req.userId, req.params.sessionId);
   res.json({ history });
 });
 
 // ── Get voting plans ───────────────────────────────────────
-router.get("/voting-plans", (req, res) => {
-  const plans = stmts.getPlans.all(req.userId);
-  res.json({ plans: plans.map(p => ({ ...p, plan_data: JSON.parse(p.plan_data), answers: p.answers ? JSON.parse(p.answers) : null })) });
+router.get("/voting-plans", async (req, res) => {
+  const plans = await firestoreService.getVotingPlans(req.userId);
+  res.json({ plans });
 });
 
 export default router;

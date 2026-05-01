@@ -2,7 +2,7 @@ import { Router } from "express";
 import { GoogleGenAI } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
-import { stmts } from "../db/database.js";
+import { firestoreService } from "../db/firestore-service.js";
 import { optionalAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -45,7 +45,7 @@ router.post("/", optionalAuth, async (req, res) => {
     // Build history: from DB if logged in, otherwise from memory
     let history = [];
     if (req.userId) {
-      const dbHistory = stmts.getHistory.all(req.userId, sessionId);
+      const dbHistory = await firestoreService.getChatHistory(req.userId, sessionId);
       history = dbHistory.map(h => ({ role: h.role, parts: [{ text: h.message }] }));
     } else {
       if (!sessions.has(sessionId)) {
@@ -84,8 +84,8 @@ router.post("/", optionalAuth, async (req, res) => {
 
     // Persist to DB if logged in
     if (req.userId) {
-      stmts.saveMessage.run(req.userId, sessionId, "user", message);
-      stmts.saveMessage.run(req.userId, sessionId, "model", fullResponse);
+      await firestoreService.saveChatMessage(req.userId, sessionId, "user", message);
+      await firestoreService.saveChatMessage(req.userId, sessionId, "model", fullResponse);
     } else {
       // Fallback: in-memory
       const session = sessions.get(sessionId);

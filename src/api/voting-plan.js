@@ -2,7 +2,7 @@ import { Router } from "express";
 import { GoogleGenAI } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
-import { stmts } from "../db/database.js";
+import { firestoreService } from "../db/firestore-service.js";
 import { optionalAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -80,8 +80,8 @@ Focus on Indian election process (ECI).`;
 
       // Persist for logged-in users
       if (req.userId) {
-        const answers = JSON.stringify({ age, state, isRegistered, hasVoterId, votingPreference, isFirstTime, isNRI, hasPwD });
-        stmts.savePlan.run(req.userId, JSON.stringify(plan), answers);
+        const answersData = { age, state, isRegistered, hasVoterId, votingPreference, isFirstTime, isNRI, hasPwD };
+        await firestoreService.saveVotingPlan(req.userId, plan, answersData);
       }
 
       res.json(plan);
