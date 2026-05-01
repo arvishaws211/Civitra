@@ -1,4 +1,5 @@
 import admin from "firebase-admin";
+import { getFirestore } from "firebase-admin/firestore";
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -33,6 +34,6 @@ try {
   }
 }
 
-export const db = admin.firestore();
+export const db = getFirestore(undefined, "civitra");
 export const bucket = admin.storage().bucket();
 export const auth = admin.auth(); // Optional: If you want to migrate auth later
