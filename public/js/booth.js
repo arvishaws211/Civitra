@@ -1,7 +1,6 @@
 import { showToast } from "./app.js";
 
 let map = null;
-let userMarker = null;
 let boothMarkers = [];
 let userPosition = null;
 let mapsLoaded = false;
@@ -66,7 +65,7 @@ function requestLocation() {
         showBoothsWithoutMap();
       }
     },
-    (err) => {
+    (_err) => {
       showToast("Location access denied. Please enable it in your browser settings.", "error");
       btn.textContent = "Enable Location";
       btn.disabled = false;
@@ -103,7 +102,7 @@ function initMap() {
       fullscreenControl: true,
     });
 
-    userMarker = new google.maps.Marker({
+    new google.maps.Marker({
       position: userPosition,
       map: map,
       title: "Your Location",

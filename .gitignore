@@ -26,3 +26,9 @@ playwright-report/
 
 # Dependencies
 firebase-service-account.json
+
+# Data
+data/
+*.db
+*.db-shm
+*.db-wal

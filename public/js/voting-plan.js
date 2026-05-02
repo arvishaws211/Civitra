@@ -104,10 +104,7 @@ const STEPS = [
 
 let currentStep = 0;
 let answers = {};
-let sid = "";
-
-export function initVotingPlan(sessionId) {
-  sid = sessionId;
+export function initVotingPlan(_sessionId) {
   renderStep();
   document.getElementById("plan-next").addEventListener("click", nextStep);
   document.getElementById("plan-prev").addEventListener("click", prevStep);
@@ -214,7 +211,7 @@ async function generatePlan() {
     if (!res.ok) throw new Error("Failed");
     const plan = await res.json();
     renderPlan(plan);
-  } catch (err) {
+  } catch {
     content.innerHTML =
       '<p style="color:var(--error);text-align:center;padding:40px">Failed to generate plan. Please try again.</p>';
     showToast("Failed to generate voting plan", "error");
@@ -235,7 +232,7 @@ function renderPlan(plan) {
       // If parsing succeeds, merge with original plan object
       Object.assign(plan, parsed);
       delete plan.rawContent;
-    } catch (e) {
+    } catch {
       // If it's truly not JSON, just show it as markdown
       content.innerHTML =
         `<div class="plan__result-card glass-card"><h3>📋 ${plan.title}</h3>${typeof marked !== "undefined" ? marked.parse(plan.rawContent) : plan.rawContent}</div>` +

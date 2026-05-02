@@ -3,6 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 import SYSTEM_PROMPT from "../config/system-prompt.js";
 import KNOWLEDGE_BASE from "../config/knowledge-base.js";
 import log from "../lib/logger.js";
+import { cleanJsonString } from "../lib/utils.js";
 
 const router = Router();
 
@@ -66,10 +67,7 @@ ${(issues?.length ? issues : ["Economy & Jobs", "Education", "Healthcare", "Agri
     });
 
     let text = response.text || "";
-    text = text
-      .replace(/```json\s*/gi, "")
-      .replace(/```\s*/g, "")
-      .trim();
+    text = cleanJsonString(text);
 
     try {
       const result = JSON.parse(text);

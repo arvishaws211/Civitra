@@ -1,5 +1,5 @@
 import { showToast } from "./app.js";
-import { authHeaders, getUser } from "./auth.js";
+import { authHeaders } from "./auth.js";
 
 export async function initProfile() {
   document.getElementById("profile-form")?.addEventListener("submit", updateProfile);

@@ -135,10 +135,12 @@ async function loadTopic(topicId) {
                 ? marked.parse(fullText)
                 : fullText.replace(/\n/g, "<br>"));
           }
-        } catch {}
+        } catch {
+          // Skip malformed chunks
+        }
       }
     }
-  } catch (err) {
+  } catch {
     content.innerHTML = `<h2>${topic.icon} ${topic.title}</h2><p style="color:var(--error)">Failed to load content. Please check your API key and try again.</p>`;
     showToast("Failed to load topic", "error");
   }

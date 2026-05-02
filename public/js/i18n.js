@@ -88,7 +88,7 @@ export function initI18n() {
   select.value = current;
 
   // Watch for dynamic changes (like when a voting plan is generated)
-  const observer = new MutationObserver((mutations) => {
+  const observer = new MutationObserver((_mutations) => {
     if (getLang() === "en") return;
 
     // Debounce to avoid hitting API too many times per second

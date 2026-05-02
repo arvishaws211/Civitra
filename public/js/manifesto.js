@@ -119,7 +119,7 @@ async function runComparison() {
     if (!res.ok) throw new Error("Failed");
     const data = await res.json();
     renderComparison(data);
-  } catch (err) {
+  } catch {
     content.innerHTML =
       '<p style="color:var(--error);text-align:center;padding:40px">Failed to generate comparison. Please try again.</p>';
     showToast("Manifesto comparison failed", "error");

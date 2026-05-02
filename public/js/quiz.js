@@ -33,7 +33,7 @@ async function startQuiz() {
     startEl.style.display = "none";
     activeEl.style.display = "block";
     renderQuestion();
-  } catch (err) {
+  } catch {
     startEl.innerHTML =
       '<div style="text-align:center;padding:48px"><div class="quiz__start-icon">🧠</div><h3>Ready to test your election knowledge?</h3><p style="color:var(--error);margin:12px 0">Failed to generate quiz. Check your API key.</p><button class="btn btn--primary btn--lg" id="quiz-begin">Try Again</button></div>';
     document.getElementById("quiz-begin")?.addEventListener("click", startQuiz);

@@ -9,7 +9,6 @@ export default [
       "coverage/**",
       "playwright-report/**",
       "test-results/**",
-      "public/**",
     ],
   },
   js.configs.recommended,
@@ -23,6 +22,17 @@ export default [
     rules: {
       "no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       "no-console": "error",
+    },
+  },
+  {
+    files: ["public/js/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        google: "readonly",
+        marked: "readonly",
+        grecaptcha: "readonly",
+      },
     },
   },
   {

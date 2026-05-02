@@ -5,6 +5,7 @@ import KNOWLEDGE_BASE from "../config/knowledge-base.js";
 import { firestoreService } from "../db/firestore-service.js";
 import log from "../lib/logger.js";
 import { optionalAuth } from "../middleware/auth.js";
+import { cleanJsonString } from "../lib/utils.js";
 
 const router = Router();
 
@@ -81,12 +82,7 @@ Focus on Indian election process (ECI).`;
     });
 
     let text = response.text || "";
-
-    // Strip markdown code fences if present
-    text = text
-      .replace(/```json\s*/gi, "")
-      .replace(/```\s*/g, "")
-      .trim();
+    text = cleanJsonString(text);
 
     try {
       const plan = JSON.parse(text);
