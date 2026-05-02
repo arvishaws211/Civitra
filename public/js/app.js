@@ -64,6 +64,7 @@ export function showToast(message, type = "info") {
 
 // ── Auth State UI ──────────────────────────────────────────
 function updateAuthUI(loggedIn) {
+  const landingView = document.getElementById("view-landing");
   const authView = document.getElementById("view-auth");
   const appViews = document.getElementById("app-authenticated");
   const sidebar = document.getElementById("sidebar");
@@ -73,6 +74,7 @@ function updateAuthUI(loggedIn) {
   const userNameEl = document.getElementById("sidebar-user-name");
 
   if (loggedIn) {
+    if (landingView) landingView.style.display = "none";
     authView.style.display = "none";
     appViews.style.display = "block";
     sidebar.style.display = "flex";
@@ -96,7 +98,7 @@ function updateAuthUI(loggedIn) {
     initI18n();
     window.__switchView("chat");
   } else {
-    authView.style.display = "flex";
+    // Let the CSS handle view-landing being active by default
     appViews.style.display = "none";
     sidebar.style.display = "none";
     mobileHeader.style.display = "none";
@@ -108,8 +110,18 @@ document.addEventListener("DOMContentLoaded", () => {
   initNav();
   initAuth(updateAuthUI);
 
-  // If not logged in, show auth view
+  // If not logged in, show auth view (or let landing be active)
   if (!isLoggedIn()) {
     updateAuthUI(false);
+  }
+
+  // Hook up landing page Get Started button
+  const getStartedBtn = document.getElementById("landing-get-started");
+  if (getStartedBtn) {
+    getStartedBtn.addEventListener("click", () => {
+      document.getElementById("view-landing").classList.remove("view--active");
+      document.getElementById("view-auth").classList.add("view--active");
+      document.getElementById("view-auth").style.display = "flex";
+    });
   }
 });

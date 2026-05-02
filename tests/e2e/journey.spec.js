@@ -4,6 +4,8 @@ import { AxeBuilder } from "@axe-core/playwright";
 test.describe("journey navigation and a11y", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
+    await expect(page.locator("#view-landing")).toBeVisible();
+    await page.click("#landing-get-started");
     await expect(page.locator("#view-auth")).toBeVisible();
   });
 

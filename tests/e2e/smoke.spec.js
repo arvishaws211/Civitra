@@ -2,9 +2,9 @@ import { test, expect, request as apiRequest } from "@playwright/test";
 import { AxeBuilder } from "@axe-core/playwright";
 
 test.describe("smoke and a11y", () => {
-  test("landing auth view is visible", async ({ page }) => {
+  test("landing view is visible", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator("#view-auth")).toBeVisible();
+    await expect(page.locator("#view-landing")).toBeVisible();
   });
 
   test("page title contains Civitra", async ({ page }) => {
@@ -12,9 +12,9 @@ test.describe("smoke and a11y", () => {
     await expect(page).toHaveTitle(/Civitra/i);
   });
 
-  test("no serious axe violations on auth view", async ({ page }) => {
+  test("no serious axe violations on landing view", async ({ page }) => {
     await page.goto("/");
-    const results = await new AxeBuilder({ page }).include("#view-auth").analyze();
+    const results = await new AxeBuilder({ page }).include("#view-landing").analyze();
     const serious = results.violations.filter((v) =>
       ["critical", "serious"].includes(v.impact || "")
     );
