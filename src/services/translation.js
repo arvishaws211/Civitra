@@ -7,7 +7,10 @@ const cache = new Map();
  * @param {string} targetLanguage BCP-47 or ISO-639 like "hi"
  */
 export async function translateText(text, targetLanguage) {
-  const key = process.env.TRANSLATION_API_KEY || process.env.GOOGLE_TRANSLATION_API_KEY;
+  const key = process.env.TRANSLATION_API_KEY || 
+              process.env.GOOGLE_TRANSLATION_API_KEY || 
+              process.env.MAPS_API_KEY;
+              
   if (!key || !text?.trim()) {
     return { translatedText: text, sourceLanguage: "und", cached: false, fallback: !key };
   }
@@ -20,14 +23,19 @@ export async function translateText(text, targetLanguage) {
     const url = `https://translation.googleapis.com/language/translate/v2?key=${encodeURIComponent(key)}`;
     const res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Referer": "http://localhost:5000/"
+      },
       body: JSON.stringify({ q: text, target: targetLanguage, format: "text" }),
     });
     if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      console.error("Translation API Error:", res.status, errData);
       return {
         translatedText: text,
         sourceLanguage: "und",
-        error: `HTTP ${res.status}`,
+        error: `HTTP ${res.status}: ${errData.error?.message || "Unknown error"}`,
         fallback: true,
       };
     }

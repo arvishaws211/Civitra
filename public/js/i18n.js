@@ -22,6 +22,12 @@ function getTranslatableElements() {
     ".learn__back-btn",
     ".chat__disclaimer",
     ".nav-item span",
+    ".btn",
+    "label",
+    "h3",
+    "h4",
+    ".stat-card__label",
+    ".sidebar__lang-label"
   ];
   return document.querySelectorAll(selectors.join(","));
 }
@@ -80,6 +86,22 @@ export function initI18n() {
 
   const current = getLang();
   select.value = current;
+
+  // Watch for dynamic changes (like when a voting plan is generated)
+  const observer = new MutationObserver((mutations) => {
+    if (getLang() === "en") return;
+    
+    // Debounce to avoid hitting API too many times per second
+    if (window._i18nTimer) clearTimeout(window._i18nTimer);
+    window._i18nTimer = setTimeout(async () => {
+      const els = getTranslatableElements();
+      storeOriginals(els);
+      const isFallback = await translateElements(els, getLang());
+      if (banner) banner.style.display = isFallback ? "block" : "none";
+    }, 500);
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
 
   select.addEventListener("change", async () => {
     const code = select.value;
