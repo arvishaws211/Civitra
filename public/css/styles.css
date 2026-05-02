@@ -50,19 +50,20 @@ body {
 /* ═══ Accessibility ═══ */
 .skip-link {
   position: absolute;
-  top: -40px;
+  top: 0;
   left: 0;
+  transform: translateY(-100%);
   background: var(--accent);
   color: #fff;
   padding: 8px 16px;
   z-index: 9999;
-  transition: top 0.2s;
+  transition: transform 0.2s ease-in-out;
   font-weight: 600;
   text-decoration: none;
   border-radius: 0 0 8px 0;
 }
 .skip-link:focus {
-  top: 0;
+  transform: translateY(0);
 }
 
 /* ═══ Animated BG ═══ */
