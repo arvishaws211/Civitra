@@ -3,7 +3,7 @@
  */
 
 /**
- * Strips markdown code fences from a string (e.g., ```json ... ```) 
+ * Strips markdown code fences from a string (e.g., ```json ... ```)
  * and trims the resulting text.
  * @param {string} text - The raw text potentially containing markdown blocks.
  * @returns {string} The cleaned text.
