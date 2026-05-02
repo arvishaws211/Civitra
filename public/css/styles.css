@@ -47,6 +47,24 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ═══ Accessibility ═══ */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 9999;
+  transition: top 0.2s;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 /* ═══ Animated BG ═══ */
 .bg-gradient {
   position: fixed;
@@ -753,7 +771,7 @@ body {
   line-height: 1.6;
 }
 .learn__detail {
-  padding: 32px;
+  padding: 40px 32px 32px;
   margin-top: 0;
 }
 .learn__back-btn {
@@ -765,7 +783,7 @@ body {
   color: var(--accent);
   font: 500 0.9rem var(--font);
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 .learn__back-btn svg {
   width: 18px;
@@ -825,7 +843,7 @@ body {
   width: 100%;
 }
 .plan__wizard {
-  padding: 32px;
+  padding: 40px 32px 32px;
 }
 .plan__progress {
   height: 4px;
