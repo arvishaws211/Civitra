@@ -158,7 +158,17 @@ export const KNOWLEDGE_BASE = `
 - **Helpline**: 1950 (toll-free)
 - **App**: Voter Helpline (Android & iOS)
 
-### 12. IMPORTANT LINKS
+### 12. ELECTION MYTH BUSTERS
+- **Myth**: EVMs can be hacked via Bluetooth or Wi-Fi.
+- **Fact**: EVMs are standalone machines with no radio frequency transmission capabilities and are not connected to any network.
+- **Myth**: If NOTA gets the highest votes, the election is cancelled.
+- **Fact**: NOTA is a protest vote. The candidate with the most votes (excluding NOTA) still wins.
+- **Myth**: NRI voters can vote online.
+- **Fact**: NRIs must be physically present at their registered polling station in India to vote.
+- **Myth**: You need a Voter ID card to vote.
+- **Fact**: You need to be on the electoral roll. You can use 12 other photo IDs (like Aadhaar or Passport) to vote.
+
+### 13. IMPORTANT LINKS
 - Voter Registration: https://voters.eci.gov.in/
 - Check Electoral Roll: https://electoralsearch.eci.gov.in/
 - Download Forms: https://eci.gov.in/

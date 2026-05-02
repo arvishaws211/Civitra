@@ -12,13 +12,17 @@ test.describe("smoke and a11y", () => {
     await expect(page).toHaveTitle(/Civitra/i);
   });
 
-  test("no serious axe violations on landing view", async ({ page }) => {
+  test("no axe violations on landing view", async ({ page }) => {
     await page.goto("/");
     const results = await new AxeBuilder({ page }).include("#view-landing").analyze();
-    const serious = results.violations.filter((v) =>
-      ["critical", "serious"].includes(v.impact || "")
-    );
-    expect(serious, JSON.stringify(serious, null, 2)).toHaveLength(0);
+    expect(results.violations, JSON.stringify(results.violations, null, 2)).toHaveLength(0);
+  });
+
+  test("no axe violations on auth view", async ({ page }) => {
+    await page.goto("/");
+    await page.click("#landing-get-started");
+    const results = await new AxeBuilder({ page }).include("#view-auth").analyze();
+    expect(results.violations, JSON.stringify(results.violations, null, 2)).toHaveLength(0);
   });
 
   test("skip-to-content link is present in DOM", async ({ page }) => {

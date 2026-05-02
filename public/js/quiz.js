@@ -52,7 +52,10 @@ function renderQuestion() {
 
   const optionsEl = document.getElementById("quiz-options");
   optionsEl.innerHTML = q.options
-    .map((opt, i) => `<div class="quiz__option" data-index="${i}">${opt}</div>`)
+    .map(
+      (opt, i) =>
+        `<button class="quiz__option" data-index="${i}" aria-label="Option ${i + 1}: ${opt}">${opt}</button>`
+    )
     .join("");
 
   optionsEl.querySelectorAll(".quiz__option").forEach((el) => {

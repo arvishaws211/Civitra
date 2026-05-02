@@ -9,6 +9,39 @@
     />
     <meta name="theme-color" content="#0a0e1a" />
     <title>Civitra — Clarity in Every Vote</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://civitra.dev/" />
+    <meta property="og:title" content="Civitra — Clarity in Every Vote" />
+    <meta
+      property="og:description"
+      content="AI-powered Election Process Education Assistant. Demystifying Indian democracy."
+    />
+    <meta property="og:image" content="/assets/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://civitra.dev/" />
+    <meta property="twitter:title" content="Civitra — Clarity in Every Vote" />
+    <meta
+      property="twitter:description"
+      content="AI-powered Election Process Education Assistant."
+    />
+    <meta property="twitter:image" content="/assets/og-image.png" />
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/icon-192.png" />
+
+    <link
+      rel="preload"
+      href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,6 +49,23 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Civitra",
+        "url": "https://civitra.dev/",
+        "description": "AI-powered Election Process Education Assistant. Demystifying Indian democracy through interactive conversation.",
+        "applicationCategory": "Education",
+        "operatingSystem": "Web",
+        "author": {
+          "@type": "Organization",
+          "name": "Civitra Team"
+        }
+      }
+    </script>
   </head>
   <body>
     <!-- Skip to main content (accessibility) -->
@@ -34,9 +84,17 @@
       <aside class="sidebar" id="sidebar">
         <div class="sidebar__brand">
           <div class="sidebar__logo">
-            <img src="/assets/logo.png" alt="Civitra Logo" class="logo-img" />
+            <img
+              src="/assets/logo.png"
+              alt=""
+              class="logo-img"
+              aria-hidden="true"
+              width="44"
+              height="44"
+              loading="eager"
+            />
             <div>
-              <h1 class="sidebar__title">Civitra</h1>
+              <p class="sidebar__title">Civitra</p>
               <p class="sidebar__tagline">Clarity in Every Vote</p>
             </div>
           </div>
@@ -52,6 +110,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
             </svg>
@@ -66,6 +125,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
               <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
@@ -81,6 +141,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <path d="M9 11l3 3L22 4" />
               <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
@@ -96,6 +157,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <circle cx="12" cy="12" r="10" />
               <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
@@ -112,6 +174,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
               <circle cx="12" cy="10" r="3" />
@@ -127,6 +190,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
               <line x1="3" y1="9" x2="21" y2="9" />
@@ -143,6 +207,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
               <circle cx="12" cy="7" r="4" />
@@ -158,6 +223,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
               <polyline points="16 17 21 12 16 7" />
@@ -198,11 +264,13 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <circle cx="12" cy="12" r="10" />
               <line x1="12" y1="16" x2="12" y2="12" />
               <line x1="12" y1="8" x2="12.01" y2="8" />
             </svg>
+            <span class="sr-only">Notice: </span>
             <span>Non-partisan. Process-focused. Powered by Gemini AI.</span>
           </div>
         </div>
@@ -217,6 +285,7 @@
             stroke="currentColor"
             stroke-width="2"
             stroke-linecap="round"
+            aria-hidden="true"
           >
             <line x1="3" y1="6" x2="21" y2="6" />
             <line x1="3" y1="12" x2="21" y2="12" />
@@ -224,7 +293,14 @@
           </svg>
         </button>
         <div class="mobile-brand">
-          <img src="/assets/logo.png" alt="Civitra Logo" class="logo-img logo-img--sm" />
+          <img
+            src="/assets/logo.png"
+            alt=""
+            class="logo-img logo-img--sm"
+            aria-hidden="true"
+            width="32"
+            height="32"
+          />
           <span>Civitra</span>
         </div>
       </header>
@@ -236,9 +312,16 @@
           <div class="landing">
             <div class="landing__hero">
               <div class="landing__logo-container">
-                <img src="/assets/logo.png" alt="Civitra Logo" class="landing__logo" />
+                <img
+                  src="/assets/logo.png"
+                  alt=""
+                  class="landing__logo"
+                  aria-hidden="true"
+                  width="120"
+                  height="120"
+                />
               </div>
-              <h1 class="landing__brand">Civitra</h1>
+              <p class="landing__brand">Civitra</p>
               <p class="landing__tagline">Clarity in Every Vote</p>
               <div class="landing__hero-content">
                 <h2 class="hero-title">Empowering Every Indian Voter</h2>
@@ -247,9 +330,25 @@
                   register, plan your vote, and understand your rights—all in one place.
                 </p>
                 <div class="hero-cta">
-                  <button class="btn btn--primary" id="landing-get-started">
+                  <button class="btn btn--primary btn--lg" id="landing-get-started">
                     Start Your Civic Journey
                   </button>
+                  <button class="btn btn--outline btn--lg" id="landing-pledge">
+                    Take Voter Pledge
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Stats / Myth Buster Section -->
+            <div class="landing__extra">
+              <div class="landing__myth-card glass-card">
+                <div class="myth-icon">💡</div>
+                <div class="myth-content">
+                  <h4>Did You Know?</h4>
+                  <p id="myth-text">
+                    EVMs are standalone machines and are not connected to any network or internet.
+                  </p>
                 </div>
               </div>
             </div>
@@ -651,6 +750,7 @@
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round"
+                      aria-hidden="true"
                     >
                       <line x1="22" y1="2" x2="11" y2="13" />
                       <polygon points="22 2 15 22 11 13 2 9 22 2" />
@@ -691,6 +791,7 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
+                    aria-hidden="true"
                   >
                     <line x1="19" y1="12" x2="5" y2="12" />
                     <polyline points="12 19 5 12 12 5" />
@@ -756,11 +857,14 @@
                 </div>
                 <button class="btn btn--primary btn--lg" id="quiz-begin">Start Quiz</button>
               </div>
+
               <!-- Quiz Active -->
               <div class="quiz__active" id="quiz-active" style="display: none">
                 <div class="quiz__header">
-                  <span class="quiz__counter" id="quiz-counter">Question 1 of 5</span>
-                  <span class="quiz__score" id="quiz-score">Score: 0</span>
+                  <span class="quiz__counter" id="quiz-counter" aria-live="polite"
+                    >Question 1 of 5</span
+                  >
+                  <span class="quiz__score" id="quiz-score" aria-live="polite">Score: 0</span>
                 </div>
                 <div class="quiz__question glass-card" id="quiz-question" aria-live="polite"></div>
                 <div class="quiz__options" id="quiz-options"></div>
@@ -882,6 +986,7 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
+                    aria-hidden="true"
                   >
                     <line x1="19" y1="12" x2="5" y2="12" />
                     <polyline points="12 19 5 12 12 5" />
@@ -906,7 +1011,7 @@
                 <div class="profile__main">
                   <div class="glass-card profile__card">
                     <div class="profile__header">
-                      <div class="profile__avatar">👤</div>
+                      <div class="profile__avatar" aria-hidden="true">👤</div>
                       <div>
                         <h3 id="profile-user-name">User Name</h3>
                         <p id="profile-user-email">email@example.com</p>
@@ -942,7 +1047,7 @@
                   </div>
 
                   <div class="glass-card profile__card">
-                    <h3>🗳️ Election Card Verification</h3>
+                    <h3><span aria-hidden="true">🗳️</span> Election Card Verification</h3>
                     <p class="profile__subtext">
                       Upload your election card to fetch relative data (Demo purposes).
                     </p>
@@ -952,6 +1057,7 @@
                           type="file"
                           id="election-card-file"
                           accept=".jpg,.jpeg,.png,.webp,.pdf"
+                          aria-label="Upload election card"
                         />
                         <div id="card-preview" class="profile__preview">
                           <div class="profile__preview-placeholder">No file selected</div>
@@ -965,13 +1071,13 @@
                 <!-- History Sidebar -->
                 <div class="profile__side">
                   <div class="glass-card profile__card">
-                    <h3>📜 Chat Sessions</h3>
+                    <h3><span aria-hidden="true">📜</span> Chat Sessions</h3>
                     <div id="profile-chat-sessions" class="profile__history-list">
                       <!-- Injected by profile.js -->
                     </div>
                   </div>
                   <div class="glass-card profile__card">
-                    <h3>📋 Saved Voting Plans</h3>
+                    <h3><span aria-hidden="true">📋</span> Saved Voting Plans</h3>
                     <div id="profile-voting-plans" class="profile__history-list">
                       <!-- Injected by profile.js -->
                     </div>
@@ -992,6 +1098,43 @@
 
     <!-- ── Scripts ──────────────────────────────────────── -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Voter Pledge Modal -->
+    <div
+      id="pledge-modal"
+      class="modal"
+      role="dialog"
+      aria-labelledby="pledge-title"
+      aria-modal="true"
+    >
+      <div class="modal__content glass-card">
+        <button class="modal__close" id="pledge-close" aria-label="Close modal">&times;</button>
+        <div class="pledge-form" id="pledge-form">
+          <h2 id="pledge-title">Take the Voter Pledge</h2>
+          <p>Commit to being an active participant in Indian democracy.</p>
+          <div class="pledge-box">
+            <p>
+              "I pledge to cast my vote in every election, to be an informed citizen, and to
+              encourage others to do the same."
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="pledge-name">Your Full Name</label>
+            <input type="text" id="pledge-name" placeholder="Enter your name" class="input" />
+          </div>
+          <button class="btn btn--primary btn--lg w-full" id="pledge-submit">Commit to Vote</button>
+        </div>
+        <div class="pledge-success" id="pledge-success" style="display: none">
+          <div class="success-icon">🏆</div>
+          <h2>Pledge Taken!</h2>
+          <p>Thank you, <span id="pledge-display-name"></span>, for strengthening our democracy.</p>
+          <div class="pledge-certificate" id="pledge-cert">
+            <p>Certified Voter Pledge — Civitra</p>
+          </div>
+          <button class="btn btn--outline w-full" id="pledge-share">Share Your Commitment</button>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="/js/app.js"></script>
   </body>
 </html>

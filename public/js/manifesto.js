@@ -39,13 +39,13 @@ function renderParties(data) {
   let html =
     '<div class="manifesto__group"><h4>National Parties</h4><div class="manifesto__chips">';
   data.national.forEach((p) => {
-    html += `<div class="manifesto__chip" data-party="${p.abbr}" data-fullname="${p.name}">${p.abbr}</div>`;
+    html += `<button class="manifesto__chip" data-party="${p.abbr}" data-fullname="${p.name}" aria-pressed="false">${p.abbr}</button>`;
   });
   html += "</div></div>";
 
   html += '<div class="manifesto__group"><h4>Regional Parties</h4><div class="manifesto__chips">';
   data.regional.forEach((p) => {
-    html += `<div class="manifesto__chip" data-party="${p.abbr}" data-fullname="${p.name}">${p.abbr} <span class="manifesto__chip-state">${p.state}</span></div>`;
+    html += `<button class="manifesto__chip" data-party="${p.abbr}" data-fullname="${p.name}" aria-pressed="false">${p.abbr} <span class="manifesto__chip-state">${p.state}</span></button>`;
   });
   html += "</div></div>";
 
@@ -54,8 +54,10 @@ function renderParties(data) {
   container.querySelectorAll(".manifesto__chip").forEach((chip) => {
     chip.addEventListener("click", () => {
       chip.classList.toggle("selected");
+      const isSelected = chip.classList.contains("selected");
+      chip.setAttribute("aria-pressed", isSelected);
       const party = chip.dataset.fullname;
-      if (chip.classList.contains("selected")) {
+      if (isSelected) {
         selectedParties.push(party);
       } else {
         selectedParties = selectedParties.filter((p) => p !== party);
@@ -69,7 +71,7 @@ function renderIssues() {
   const container = document.getElementById("manifesto-issues");
   let html = '<div class="manifesto__chips">';
   DEFAULT_ISSUES.forEach((issue) => {
-    html += `<div class="manifesto__chip manifesto__chip--issue" data-issue="${issue}">${issue}</div>`;
+    html += `<button class="manifesto__chip manifesto__chip--issue" data-issue="${issue}" aria-pressed="false">${issue}</button>`;
   });
   html += "</div>";
   container.innerHTML = html;
@@ -77,8 +79,10 @@ function renderIssues() {
   container.querySelectorAll(".manifesto__chip--issue").forEach((chip) => {
     chip.addEventListener("click", () => {
       chip.classList.toggle("selected");
+      const isSelected = chip.classList.contains("selected");
+      chip.setAttribute("aria-pressed", isSelected);
       const issue = chip.dataset.issue;
-      if (chip.classList.contains("selected")) {
+      if (isSelected) {
         selectedIssues.push(issue);
       } else {
         selectedIssues = selectedIssues.filter((i) => i !== issue);
