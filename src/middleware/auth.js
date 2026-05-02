@@ -2,6 +2,10 @@ import jwt from "jsonwebtoken";
 import log from "../lib/logger.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "civitra_default_secret_change_me";
+// MUST be overridden in production via JWT_SECRET environment variable.
+if (process.env.NODE_ENV === "production" && JWT_SECRET === "civitra_default_secret_change_me") {
+  throw new Error("FATAL: JWT_SECRET must be set to a strong random value in production.");
+}
 const JWT_EXPIRY = "7d";
 
 export function generateToken(userId) {

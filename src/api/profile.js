@@ -22,9 +22,14 @@ router.use(requireAuth);
 
 // ── Get profile ────────────────────────────────────────────
 router.get("/", async (req, res) => {
-  const user = await firestoreService.findUserById(req.userId);
-  if (!user) return res.status(404).json({ error: "User not found." });
-  res.json({ user });
+  try {
+    const user = await firestoreService.findUserById(req.userId);
+    if (!user) return res.status(404).json({ error: "User not found." });
+    res.json({ user });
+  } catch (error) {
+    log.error("profile_get_error", { error: error.message });
+    res.status(500).json({ error: "Failed to retrieve profile." });
+  }
 });
 
 // ── Update profile ─────────────────────────────────────────
@@ -39,9 +44,14 @@ router.put("/", async (req, res) => {
 
   if (name?.trim()) updateData.name = name.trim();
 
-  await firestoreService.updateProfile(req.userId, updateData);
-  const user = await firestoreService.findUserById(req.userId);
-  res.json({ user, message: "Profile updated." });
+  try {
+    await firestoreService.updateProfile(req.userId, updateData);
+    const user = await firestoreService.findUserById(req.userId);
+    res.json({ user, message: "Profile updated." });
+  } catch (error) {
+    log.error("profile_update_error", { error: error.message });
+    res.status(500).json({ error: "Failed to update profile." });
+  }
 });
 
 // ── Upload election card to Firebase Storage ──────────────

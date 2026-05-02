@@ -1,3 +1,5 @@
+import log from "../lib/logger.js";
+
 const TTL_MS = 5 * 60 * 1000;
 const cache = new Map();
 
@@ -7,10 +9,11 @@ const cache = new Map();
  * @param {string} targetLanguage BCP-47 or ISO-639 like "hi"
  */
 export async function translateText(text, targetLanguage) {
-  const key = process.env.TRANSLATION_API_KEY || 
-              process.env.GOOGLE_TRANSLATION_API_KEY || 
-              process.env.MAPS_API_KEY;
-              
+  const key =
+    process.env.TRANSLATION_API_KEY ||
+    process.env.GOOGLE_TRANSLATION_API_KEY ||
+    process.env.MAPS_API_KEY;
+
   if (!key || !text?.trim()) {
     return { translatedText: text, sourceLanguage: "und", cached: false, fallback: !key };
   }
@@ -23,15 +26,18 @@ export async function translateText(text, targetLanguage) {
     const url = `https://translation.googleapis.com/language/translate/v2?key=${encodeURIComponent(key)}`;
     const res = await fetch(url, {
       method: "POST",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-        "Referer": "http://localhost:5000/"
+        Referer: process.env.APP_URL || "https://civitra.run.app/",
       },
       body: JSON.stringify({ q: text, target: targetLanguage, format: "text" }),
     });
     if (!res.ok) {
       const errData = await res.json().catch(() => ({}));
-      console.error("Translation API Error:", res.status, errData);
+      log.error("translation_api_error", {
+        status: res.status,
+        error: errData?.error?.message || "Unknown error",
+      });
       return {
         translatedText: text,
         sourceLanguage: "und",

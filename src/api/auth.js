@@ -38,11 +38,12 @@ router.post("/register", async (req, res) => {
       email: email.toLowerCase().trim(),
       password: hash,
     });
-    const token = generateToken(result.lastInsertRowid);
+    const userId = result.id ?? result.lastInsertRowid;
+    const token = generateToken(userId);
 
     res.status(201).json({
       token,
-      user: { id: result.lastInsertRowid, name: name.trim(), email: email.toLowerCase().trim() },
+      user: { id: userId, name: name.trim(), email: email.toLowerCase().trim() },
     });
   } catch (error) {
     log.error("register_error", { error: error.message });
@@ -113,11 +114,11 @@ router.post("/forgot-password", async (req, res) => {
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour
     await firestoreService.createResetToken(user.id, token, expiresAt);
 
-    // In production, send email with token. For demo, return it.
+    // In production, send email with reset link.
+    // For security: token is never returned in the response.
+    log.info("password_reset_token_generated", { userId: user.id });
     res.json({
       message: "If an account exists with this email, a reset link has been generated.",
-      // Demo only — remove in production:
-      resetToken: token,
     });
   } catch (error) {
     log.error("forgot_password_error", { error: error.message });

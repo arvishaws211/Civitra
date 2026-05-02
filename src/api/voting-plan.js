@@ -13,6 +13,14 @@ router.post("/", optionalAuth, async (req, res) => {
   const { age, state, isRegistered, hasVoterId, votingPreference, isFirstTime, isNRI, hasPwD } =
     req.body;
 
+  if (age !== undefined && (typeof age !== "number" || age < 18 || age > 120)) {
+    return res.status(400).json({ error: "Invalid age. Must be a number between 18 and 120." });
+  }
+
+  if (state && typeof state !== "string") {
+    return res.status(400).json({ error: "State must be a string." });
+  }
+
   if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === "your_gemini_api_key_here") {
     return res.status(500).json({ error: "Gemini API key not configured." });
   }

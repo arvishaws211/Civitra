@@ -6,9 +6,30 @@ import log from "../lib/logger.js";
 
 const router = Router();
 
+// ── Available Topics ───────────────────────────────────────
+router.get("/topics", (req, res) => {
+  res.json({
+    topics: [
+      "General Knowledge",
+      "Voter Registration",
+      "Voting Process",
+      "EVM and VVPAT",
+      "Special Provisions",
+      "Election Commission",
+    ],
+  });
+});
+
 // ── Generate quiz questions ────────────────────────────────
 router.post("/generate", async (req, res) => {
   const { topic, difficulty } = req.body;
+
+  if (topic && typeof topic !== "string") {
+    return res.status(400).json({ error: "Topic must be a string." });
+  }
+  if (difficulty && typeof difficulty !== "string") {
+    return res.status(400).json({ error: "Difficulty must be a string." });
+  }
 
   if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === "your_gemini_api_key_here") {
     return res.status(500).json({ error: "Gemini API key not configured." });

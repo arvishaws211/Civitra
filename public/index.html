@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
+    <!-- Skip to main content (accessibility) -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
     <!-- ── Animated Background ──────────────────────────── -->
     <div class="bg-gradient" aria-hidden="true">
       <div class="bg-orb bg-orb--saffron"></div>
@@ -243,11 +246,37 @@
                 <form id="login-form" class="auth__form">
                   <div class="form-group">
                     <label for="login-email">Email Address</label>
-                    <input type="email" id="login-email" required placeholder="name@example.com" />
+                    <input
+                      type="email"
+                      id="login-email"
+                      required
+                      aria-required="true"
+                      placeholder="name@example.com"
+                      aria-describedby="login-email-error"
+                    />
+                    <span
+                      id="login-email-error"
+                      class="form-error"
+                      role="alert"
+                      aria-live="assertive"
+                    ></span>
                   </div>
                   <div class="form-group">
                     <label for="login-password">Password</label>
-                    <input type="password" id="login-password" required placeholder="••••••••" />
+                    <input
+                      type="password"
+                      id="login-password"
+                      required
+                      aria-required="true"
+                      placeholder="••••••••"
+                      aria-describedby="login-password-error"
+                    />
+                    <span
+                      id="login-password-error"
+                      class="form-error"
+                      role="alert"
+                      aria-live="assertive"
+                    ></span>
                   </div>
                   <button type="submit" class="btn btn--primary btn--full">Sign In</button>
                 </form>
@@ -265,7 +294,20 @@
                 <form id="register-form" class="auth__form">
                   <div class="form-group">
                     <label for="register-name">Full Name</label>
-                    <input type="text" id="register-name" required placeholder="Your Name" />
+                    <input
+                      type="text"
+                      id="register-name"
+                      required
+                      aria-required="true"
+                      placeholder="Your Name"
+                      aria-describedby="register-name-error"
+                    />
+                    <span
+                      id="register-name-error"
+                      class="form-error"
+                      role="alert"
+                      aria-live="assertive"
+                    ></span>
                   </div>
                   <div class="form-group">
                     <label for="register-email">Email Address</label>
@@ -273,8 +315,16 @@
                       type="email"
                       id="register-email"
                       required
+                      aria-required="true"
                       placeholder="name@example.com"
+                      aria-describedby="register-email-error"
                     />
+                    <span
+                      id="register-email-error"
+                      class="form-error"
+                      role="alert"
+                      aria-live="assertive"
+                    ></span>
                   </div>
                   <div class="form-group">
                     <label for="register-password">Password</label>
@@ -282,13 +332,34 @@
                       type="password"
                       id="register-password"
                       required
+                      aria-required="true"
                       placeholder="••••••••"
                       minlength="6"
+                      aria-describedby="register-password-error"
                     />
+                    <span
+                      id="register-password-error"
+                      class="form-error"
+                      role="alert"
+                      aria-live="assertive"
+                    ></span>
                   </div>
                   <div class="form-group">
                     <label for="register-confirm">Confirm Password</label>
-                    <input type="password" id="register-confirm" required placeholder="••••••••" />
+                    <input
+                      type="password"
+                      id="register-confirm"
+                      required
+                      aria-required="true"
+                      placeholder="••••••••"
+                      aria-describedby="register-confirm-error"
+                    />
+                    <span
+                      id="register-confirm-error"
+                      class="form-error"
+                      role="alert"
+                      aria-live="assertive"
+                    ></span>
                   </div>
                   <button type="submit" class="btn btn--primary btn--full">Create Account</button>
                 </form>

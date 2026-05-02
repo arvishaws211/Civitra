@@ -27,7 +27,7 @@ function getTranslatableElements() {
     "h3",
     "h4",
     ".stat-card__label",
-    ".sidebar__lang-label"
+    ".sidebar__lang-label",
   ];
   return document.querySelectorAll(selectors.join(","));
 }
@@ -90,7 +90,7 @@ export function initI18n() {
   // Watch for dynamic changes (like when a voting plan is generated)
   const observer = new MutationObserver((mutations) => {
     if (getLang() === "en") return;
-    
+
     // Debounce to avoid hitting API too many times per second
     if (window._i18nTimer) clearTimeout(window._i18nTimer);
     window._i18nTimer = setTimeout(async () => {
@@ -111,10 +111,12 @@ export function initI18n() {
 
     if (code === "en") {
       restoreOriginals(els);
+      document.documentElement.lang = "en";
       if (banner) banner.style.display = "none";
       return;
     }
 
+    document.documentElement.lang = code;
     const isFallback = await translateElements(els, code);
     if (banner) {
       banner.style.display = isFallback ? "block" : "none";
